@@ -49,8 +49,11 @@ async def async_setup_entry(
             )
         )
 
+    my_id = coordinator.data.system_status.get("myID", "")
     for device in coordinator.data.config_devices:
         device_id = device["deviceID"]
+        if device_id == my_id:
+            continue
         device_label = device.get("name") or device_id[:8]
         entities.append(
             SyncthingDevicePauseButton(
