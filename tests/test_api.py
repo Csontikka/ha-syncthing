@@ -13,6 +13,7 @@ from custom_components.syncthing_extended.api import (
     SyncthingApiError,
     SyncthingAuthError,
     SyncthingConnectionError,
+    SyncthingSslError,
 )
 
 
@@ -396,3 +397,19 @@ def test_resume_all_returns_false_on_error():
         return await api.resume_all()
 
     assert asyncio.run(_run()) is False
+
+
+def test_ssl_error_raises_syncthing_ssl_error():
+    async def _run():
+        session = MagicMock()
+        session.request = MagicMock(
+            side_effect=aiohttp.ClientSSLError(MagicMock(), MagicMock())
+        )
+        api = make_api(session)
+        await api.get_version()
+
+    try:
+        asyncio.run(_run())
+        assert False, "Expected SyncthingSslError"
+    except SyncthingSslError:
+        pass

@@ -34,6 +34,10 @@ class SyncthingConnectionError(SyncthingApiError):
     """Connection error."""
 
 
+class SyncthingSslError(SyncthingConnectionError):
+    """SSL certificate verification error."""
+
+
 class SyncthingAuthError(SyncthingApiError):
     """Authentication error."""
 
@@ -101,6 +105,10 @@ class SyncthingApi:
                 return await response.text()
         except SyncthingApiError:
             raise
+        except aiohttp.ClientSSLError as err:
+            raise SyncthingSslError(
+                f"SSL certificate verification failed for {self._host}:{self._port}: {err}"
+            ) from err
         except aiohttp.ClientConnectorError as err:
             raise SyncthingConnectionError(
                 f"Cannot connect to {self._host}:{self._port}: {err}"

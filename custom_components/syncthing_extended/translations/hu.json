@@ -30,6 +30,7 @@
     "error": {
       "cannot_connect": "Nem sikerült csatlakozni a Syncthing-hez. Ellenőrizd a hosztnevet és a portot.",
       "invalid_auth": "Érvénytelen API kulcs.",
+      "ssl_error": "SSL tanúsítvány ellenőrzése sikertelen. Ha önaláírt tanúsítványt használsz, kapcsold ki az 'SSL tanúsítvány ellenőrzése' opciót.",
       "unknown": "Váratlan hiba történt."
     },
     "abort": {

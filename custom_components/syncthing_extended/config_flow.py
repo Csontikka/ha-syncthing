@@ -12,7 +12,7 @@ from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
-from .api import SyncthingApi, SyncthingAuthError, SyncthingConnectionError
+from .api import SyncthingApi, SyncthingAuthError, SyncthingConnectionError, SyncthingSslError
 from .const import (
     CONF_API_KEY,
     CONF_HOST,
@@ -98,6 +98,8 @@ class SyncthingConfigFlow(ConfigFlow, domain=DOMAIN):
                         )
             except SyncthingAuthError:
                 errors["base"] = "invalid_auth"
+            except SyncthingSslError:
+                errors["base"] = "ssl_error"
             except SyncthingConnectionError:
                 errors["base"] = "cannot_connect"
             except Exception:
@@ -142,6 +144,8 @@ class SyncthingConfigFlow(ConfigFlow, domain=DOMAIN):
                 )
             except SyncthingAuthError:
                 errors["base"] = "invalid_auth"
+            except SyncthingSslError:
+                errors["base"] = "ssl_error"
             except SyncthingConnectionError:
                 errors["base"] = "cannot_connect"
             except Exception:

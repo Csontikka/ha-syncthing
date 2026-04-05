@@ -30,6 +30,7 @@
     "error": {
       "cannot_connect": "Cannot connect to Syncthing. Check host and port.",
       "invalid_auth": "Invalid API key.",
+      "ssl_error": "SSL certificate verification failed. Disable 'Verify SSL certificate' if using a self-signed certificate.",
       "unknown": "Unexpected error occurred."
     },
     "abort": {
