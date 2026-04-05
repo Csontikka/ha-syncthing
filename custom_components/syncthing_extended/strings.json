@@ -1,0 +1,92 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to Syncthing",
+        "description": "Enter your Syncthing connection details.\nFind your API key in: Syncthing UI > Actions > Settings > API Key",
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "api_key": "API Key",
+          "verify_ssl": "Verify SSL certificate",
+          "scan_interval": "Update interval (seconds)"
+        },
+        "data_description": {
+          "host": "IP address or hostname of the Syncthing instance",
+          "port": "Default: 8384",
+          "api_key": "Found in Syncthing UI under Actions > Settings",
+          "scan_interval": "How often to poll for updates (10-300 seconds)"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Re-authenticate Syncthing",
+        "description": "Your Syncthing API key is no longer valid. Please enter a new one.",
+        "data": {
+          "api_key": "API Key"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Cannot connect to Syncthing. Check host and port.",
+      "invalid_auth": "Invalid API key.",
+      "unknown": "Unexpected error occurred."
+    },
+    "abort": {
+      "already_configured": "This Syncthing instance is already configured."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "version": { "name": "Version" },
+      "uptime": { "name": "Uptime" },
+      "my_id": { "name": "Device ID" },
+      "total_in_bytes": { "name": "Total downloaded" },
+      "total_out_bytes": { "name": "Total uploaded" },
+      "folder_state": { "name": "State" },
+      "folder_completion": { "name": "Completion" },
+      "folder_need_bytes": { "name": "Bytes needed" },
+      "folder_need_files": { "name": "Files needed" },
+      "folder_global_bytes": { "name": "Total size" },
+      "folder_global_files": { "name": "Total files" },
+      "folder_in_sync_bytes": { "name": "In sync size" },
+      "folder_in_sync_files": { "name": "In sync files" },
+      "folder_local_bytes": { "name": "Local size" },
+      "folder_local_files": { "name": "Local files" },
+      "folder_pull_errors": { "name": "Pull errors" },
+      "folder_last_scan": { "name": "Last scan" },
+      "folder_last_file": { "name": "Last synced file" },
+      "device_connection_type": { "name": "Connection type" },
+      "device_address": { "name": "Address" },
+      "device_client_version": { "name": "Client version" },
+      "device_last_seen": { "name": "Last seen" },
+      "device_in_bytes": { "name": "Downloaded" },
+      "device_out_bytes": { "name": "Uploaded" }
+    },
+    "binary_sensor": {
+      "running": { "name": "Running" },
+      "folder_error": { "name": "Error" },
+      "folder_syncing": { "name": "Syncing" },
+      "folder_paused": { "name": "Paused" },
+      "device_connected": { "name": "Connected" },
+      "device_paused": { "name": "Paused" }
+    },
+    "button": {
+      "scan_all": { "name": "Scan all folders" },
+      "folder_scan": { "name": "Scan" },
+      "folder_pause": { "name": "Pause" },
+      "folder_resume": { "name": "Resume" },
+      "device_pause": { "name": "Pause" },
+      "device_resume": { "name": "Resume" }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Syncthing Extended Options",
+        "data": {
+          "scan_interval": "Update interval (seconds)"
+        }
+      }
+    }
+  }
+}

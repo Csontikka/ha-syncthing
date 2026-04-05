@@ -1,0 +1,71 @@
+scan_folder:
+  name: Scan folder
+  description: Trigger a rescan of a specific Syncthing folder.
+  fields:
+    folder_id:
+      name: Folder ID
+      description: The Syncthing folder ID to scan.
+      required: true
+      example: "abcd-1234"
+      selector:
+        text:
+
+scan_all:
+  name: Scan all folders
+  description: Trigger a rescan of all Syncthing folders.
+
+pause_folder:
+  name: Pause folder
+  description: Pause synchronization of a specific folder.
+  fields:
+    folder_id:
+      name: Folder ID
+      description: The Syncthing folder ID to pause.
+      required: true
+      example: "abcd-1234"
+      selector:
+        text:
+
+resume_folder:
+  name: Resume folder
+  description: Resume synchronization of a specific folder.
+  fields:
+    folder_id:
+      name: Folder ID
+      description: The Syncthing folder ID to resume.
+      required: true
+      example: "abcd-1234"
+      selector:
+        text:
+
+pause_device:
+  name: Pause device
+  description: Pause synchronization with a specific device.
+  fields:
+    device_id:
+      name: Device ID
+      description: The Syncthing device ID to pause.
+      required: true
+      example: "P56IOI7-MZJNU2Y-IQGDREY-DM2MGTI"
+      selector:
+        text:
+
+resume_device:
+  name: Resume device
+  description: Resume synchronization with a specific device.
+  fields:
+    device_id:
+      name: Device ID
+      description: The Syncthing device ID to resume.
+      required: true
+      example: "P56IOI7-MZJNU2Y-IQGDREY-DM2MGTI"
+      selector:
+        text:
+
+pause_all:
+  name: Pause all
+  description: Pause synchronization with all devices.
+
+resume_all:
+  name: Resume all
+  description: Resume synchronization with all devices.

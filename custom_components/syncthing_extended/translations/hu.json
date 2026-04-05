@@ -1,0 +1,92 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Csatlakozás a Syncthing-hez",
+        "description": "Add meg a Syncthing kapcsolati adatait.\nAz API kulcsot itt találod: Syncthing UI > Actions > Settings > API Key",
+        "data": {
+          "host": "Hoszt",
+          "port": "Port",
+          "api_key": "API kulcs",
+          "verify_ssl": "SSL tanúsítvány ellenőrzése",
+          "scan_interval": "Frissítési időköz (másodperc)"
+        },
+        "data_description": {
+          "host": "A Syncthing példány IP-címe vagy hosztneve",
+          "port": "Alapértelmezett: 8384",
+          "api_key": "A Syncthing UI-ban: Actions > Settings > API Key",
+          "scan_interval": "Milyen gyakran kérdezze le az adatokat (10-300 másodperc)"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Syncthing újrahitelesítés",
+        "description": "Az API kulcsod érvénytelen lett. Add meg az újat.",
+        "data": {
+          "api_key": "API kulcs"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Nem sikerült csatlakozni a Syncthing-hez. Ellenőrizd a hosztnevet és a portot.",
+      "invalid_auth": "Érvénytelen API kulcs.",
+      "unknown": "Váratlan hiba történt."
+    },
+    "abort": {
+      "already_configured": "Ez a Syncthing példány már be van állítva."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "version": { "name": "Verzió" },
+      "uptime": { "name": "Üzemidő" },
+      "my_id": { "name": "Eszközazonosító" },
+      "total_in_bytes": { "name": "Összes letöltés" },
+      "total_out_bytes": { "name": "Összes feltöltés" },
+      "folder_state": { "name": "Állapot" },
+      "folder_completion": { "name": "Befejezettség" },
+      "folder_need_bytes": { "name": "Szükséges adatméret" },
+      "folder_need_files": { "name": "Szükséges fájlok" },
+      "folder_global_bytes": { "name": "Teljes méret" },
+      "folder_global_files": { "name": "Összes fájl" },
+      "folder_in_sync_bytes": { "name": "Szinkronizált méret" },
+      "folder_in_sync_files": { "name": "Szinkronizált fájlok" },
+      "folder_local_bytes": { "name": "Helyi méret" },
+      "folder_local_files": { "name": "Helyi fájlok" },
+      "folder_pull_errors": { "name": "Letöltési hibák" },
+      "folder_last_scan": { "name": "Utolsó szkennelés" },
+      "folder_last_file": { "name": "Utoljára szinkronizált fájl" },
+      "device_connection_type": { "name": "Kapcsolat típusa" },
+      "device_address": { "name": "Cím" },
+      "device_client_version": { "name": "Kliens verzió" },
+      "device_last_seen": { "name": "Utoljára látva" },
+      "device_in_bytes": { "name": "Letöltve" },
+      "device_out_bytes": { "name": "Feltöltve" }
+    },
+    "binary_sensor": {
+      "running": { "name": "Fut" },
+      "folder_error": { "name": "Hiba" },
+      "folder_syncing": { "name": "Szinkronizál" },
+      "folder_paused": { "name": "Szüneteltetve" },
+      "device_connected": { "name": "Csatlakozva" },
+      "device_paused": { "name": "Szüneteltetve" }
+    },
+    "button": {
+      "scan_all": { "name": "Összes mappa szkennelése" },
+      "folder_scan": { "name": "Szkennelés" },
+      "folder_pause": { "name": "Szüneteltetés" },
+      "folder_resume": { "name": "Folytatás" },
+      "device_pause": { "name": "Szüneteltetés" },
+      "device_resume": { "name": "Folytatás" }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Syncthing Extended beállítások",
+        "data": {
+          "scan_interval": "Frissítési időköz (másodperc)"
+        }
+      }
+    }
+  }
+}

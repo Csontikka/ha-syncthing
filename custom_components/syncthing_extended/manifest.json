@@ -1,0 +1,14 @@
+{
+  "domain": "syncthing_extended",
+  "name": "Syncthing Extended",
+  "version": "0.1.0",
+  "config_flow": true,
+  "codeowners": ["@csontikka"],
+  "documentation": "https://github.com/Csontikka/ha-syncthing",
+  "issue_tracker": "https://github.com/Csontikka/ha-syncthing/issues",
+  "iot_class": "local_polling",
+  "requirements": ["aiohttp>=3.8.0"],
+  "integration_type": "service",
+  "single_config_entry": false,
+  "homeassistant": "2024.1.0"
+}
