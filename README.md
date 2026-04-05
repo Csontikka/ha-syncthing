@@ -20,10 +20,10 @@ This integration adds:
 | Feature | Built-in | This |
 |---------|----------|------|
 | Folder state sensor | ✅ | ✅ |
-| Folder completion % | ❌ | ✅ |
-| Bytes / files needed | ❌ | ✅ |
-| Folder size & file count | ❌ | ✅ |
-| Pull error detection | ❌ | ✅ |
+| Folder completion % | ⚠️ attr only | ✅ dedicated sensor |
+| Bytes / files needed | ⚠️ attr only | ✅ dedicated sensor |
+| Folder size & file count | ⚠️ attr only | ✅ dedicated sensor |
+| Pull error detection | ⚠️ attr only | ✅ dedicated sensor |
 | Last scan / last file | ❌ | ✅ |
 | Device online/offline | ❌ | ✅ |
 | Device connection type | ❌ | ✅ |
