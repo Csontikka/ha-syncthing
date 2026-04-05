@@ -1,6 +1,7 @@
 """Tests for Syncthing sensor entity classes and value functions."""
 from __future__ import annotations
 
+import pytest
 from unittest.mock import MagicMock
 
 from custom_components.syncthing_extended.sensor import (
@@ -116,7 +117,7 @@ def test_folder_sensor_completion_value():
     coordinator = make_coordinator()
     desc = next(d for d in FOLDER_SENSORS if d.key == "completion")
     entity = SyncthingFolderSensor(coordinator, desc, ENTRY_ID, "abcd-1234", "Documents")
-    assert entity.native_value == 99.99  # round(99.9937, 2)
+    assert entity.native_value == pytest.approx(99.99)  # round(99.9937, 2)
 
 
 def test_folder_sensor_need_bytes_value():
@@ -165,7 +166,8 @@ def test_folder_sensor_last_scan():
     coordinator = make_coordinator()
     desc = next(d for d in FOLDER_SENSORS if d.key == "last_scan")
     entity = SyncthingFolderSensor(coordinator, desc, ENTRY_ID, "abcd-1234", "Documents")
-    assert entity.native_value == "2024-01-01T12:00:00Z"
+    from datetime import datetime, timezone
+    assert entity.native_value == datetime(2024, 1, 1, 12, 0, 0, tzinfo=timezone.utc)
 
 
 def test_folder_sensor_last_file():
@@ -231,7 +233,8 @@ def test_device_sensor_last_seen():
     coordinator = make_coordinator()
     desc = next(d for d in DEVICE_SENSORS if d.key == "last_seen")
     entity = SyncthingDeviceSensor(coordinator, desc, ENTRY_ID, DEVICE_ID, "Laptop")
-    assert entity.native_value == "2024-01-01T11:59:00Z"
+    from datetime import datetime, timezone
+    assert entity.native_value == datetime(2024, 1, 1, 11, 59, 0, tzinfo=timezone.utc)
 
 
 def test_device_sensor_in_bytes():

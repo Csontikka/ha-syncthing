@@ -78,8 +78,12 @@ def test_async_setup_entry_creates_buttons():
         return added
 
     entities = asyncio.run(_run())
-    # 1 scan_all + 2 folders = 3
-    assert len(entities) == 3
+    # 1 scan_all + 2 folders × 3 (scan/pause/resume) + 2 devices × 2 (pause/resume) = 11
+    assert len(entities) == 11
     types = [type(e).__name__ for e in entities]
     assert "SyncthingScanAllButton" in types
     assert types.count("SyncthingFolderScanButton") == 2
+    assert types.count("SyncthingFolderPauseButton") == 2
+    assert types.count("SyncthingFolderResumeButton") == 2
+    assert types.count("SyncthingDevicePauseButton") == 2
+    assert types.count("SyncthingDeviceResumeButton") == 2

@@ -4,6 +4,8 @@ from __future__ import annotations
 import asyncio
 from unittest.mock import AsyncMock, MagicMock
 
+import pytest
+
 from custom_components.syncthing_extended.api import SyncthingApiError
 from custom_components.syncthing_extended.coordinator import (
     SyncthingCoordinator,
@@ -40,7 +42,7 @@ def test_coordinator_fetch_all_data():
     assert "abcd-1234" in data.folder_status
     assert "efgh-5678" in data.folder_status
     assert data.folder_status["abcd-1234"]["state"] == "idle"
-    assert data.folder_completion["abcd-1234"]["completion"] == 99.9937
+    assert data.folder_completion["abcd-1234"]["completion"] == pytest.approx(99.9937)
 
 
 def test_coordinator_raises_update_failed_on_api_error():

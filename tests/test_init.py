@@ -34,9 +34,9 @@ def make_entry_with_coordinator():
 def test_register_services_registers_all():
     hass = make_hass(has_service=False)
     _async_register_services(hass)
-    assert hass.services.async_register.call_count == 6
+    assert hass.services.async_register.call_count == 8
     registered = {call.args[1] for call in hass.services.async_register.call_args_list}
-    assert registered == {"scan_folder", "scan_all", "pause_device", "resume_device", "pause_all", "resume_all"}
+    assert registered == {"scan_folder", "scan_all", "pause_folder", "resume_folder", "pause_device", "resume_device", "pause_all", "resume_all"}
 
 
 def test_register_services_idempotent():
@@ -211,7 +211,7 @@ def test_async_setup_registers_services():
 
     hass, result = asyncio.run(_run())
     assert result is True
-    assert hass.services.async_register.call_count == 6
+    assert hass.services.async_register.call_count == 8
 
 
 # --- api pause/resume bool returns ---

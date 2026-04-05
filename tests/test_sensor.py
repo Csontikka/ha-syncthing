@@ -84,14 +84,14 @@ def test_folder_sensor_completion():
     coord = make_coordinator()
     desc = next(d for d in FOLDER_SENSORS if d.key == "completion")
     entity = SyncthingFolderSensor(coord, desc, "test_entry", "abcd-1234", "Documents")
-    assert entity.native_value == 99.99
+    assert entity.native_value == pytest.approx(99.99)
 
 
 def test_folder_sensor_completion_partial():
     coord = make_coordinator()
     desc = next(d for d in FOLDER_SENSORS if d.key == "completion")
     entity = SyncthingFolderSensor(coord, desc, "test_entry", "efgh-5678", "Photos")
-    assert entity.native_value == 80.0
+    assert entity.native_value == pytest.approx(80.0)
 
 
 def test_folder_sensor_need_bytes():
@@ -180,7 +180,8 @@ def test_device_sensor_last_seen():
     coord = make_coordinator()
     desc = next(d for d in DEVICE_SENSORS if d.key == "last_seen")
     entity = SyncthingDeviceSensor(coord, desc, "test_entry", DEVICE_ID, "Laptop")
-    assert entity.native_value == "2024-01-01T11:59:00Z"
+    from datetime import datetime, timezone
+    assert entity.native_value == datetime(2024, 1, 1, 11, 59, 0, tzinfo=timezone.utc)
 
 
 def test_device_sensor_unique_id():

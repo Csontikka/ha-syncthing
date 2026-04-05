@@ -4,6 +4,8 @@ from __future__ import annotations
 import asyncio
 from unittest.mock import AsyncMock, MagicMock
 
+import pytest
+
 import aiohttp
 
 from custom_components.syncthing_extended.api import (
@@ -231,7 +233,7 @@ def test_get_folder_completion_returns_data():
         return await api.get_folder_completion("abcd-1234")
 
     result = asyncio.run(_run())
-    assert result["completion"] == 99.9
+    assert result["completion"] == pytest.approx(99.9)
 
 
 def test_get_folder_completion_with_device_id():
@@ -243,7 +245,7 @@ def test_get_folder_completion_with_device_id():
         return await api.get_folder_completion("abcd-1234", device_id="DEV123")
 
     result = asyncio.run(_run())
-    assert result["completion"] == 80.0
+    assert result["completion"] == pytest.approx(80.0)
 
 
 def test_get_folder_errors_returns_data():
