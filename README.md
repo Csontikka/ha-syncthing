@@ -35,6 +35,20 @@ This integration adds:
 | Multi-instance support | ❌ | ✅ |
 | UI config (no YAML) | ✅ | ✅ |
 
+## Screenshots
+
+**System device** — version, uptime, running state, total traffic and scan button:
+
+![Syncthing system device](https://raw.githubusercontent.com/Csontikka/ha-syncthing/master/images/device_main.png)
+
+**Folder** — sync state, completion, controls and all folder sensors:
+
+![Syncthing folder](https://raw.githubusercontent.com/Csontikka/ha-syncthing/master/images/folder_syncthing_photos.png)
+
+**Remote device** — connectivity, traffic, pause/resume controls and diagnostic sensors:
+
+![Syncthing remote device](https://raw.githubusercontent.com/Csontikka/ha-syncthing/master/images/device_virtualwin10.png)
+
 ## Installation
 
 ### HACS (recommended)
@@ -61,7 +75,8 @@ This integration adds:
 | Host | Yes | — | IP address or hostname of the Syncthing instance |
 | Port | Yes | `8384` | Syncthing GUI/API port |
 | API Key | Yes | — | Found in Syncthing UI: Actions → Settings → API Key |
-| Verify SSL | No | `false` | Validate the HTTPS certificate |
+| Use HTTPS | No | `false` | Connect using HTTPS instead of HTTP |
+| Verify SSL | No | `false` | Validate the HTTPS certificate (requires Use HTTPS) |
 | Update interval | No | `30` | How often to poll for updates, in seconds (10–300) |
 
 ### Finding your API key
@@ -130,7 +145,7 @@ If your API key changes, Home Assistant will show a re-authentication prompt. Cl
 | Client version ¹ | Sensor | Syncthing version on remote device |
 | Last seen ¹ | Sensor | Timestamp of last connection |
 
-*¹ Diagnostic entity — disabled by default, enable in Settings → Entities*
+*¹ Diagnostic entity — enabled by default, can be disabled in Settings → Entities*
 
 ## Services
 
