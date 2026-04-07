@@ -1,7 +1,7 @@
 {
   "domain": "syncthing",
   "name": "Syncthing",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "config_flow": true,
   "codeowners": ["@csontikka"],
   "documentation": "https://github.com/Csontikka/ha-syncthing",
