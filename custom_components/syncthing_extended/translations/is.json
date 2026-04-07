@@ -56,7 +56,7 @@
       "folder_last_scan": { "name": "Síðasta skönnun" },
       "folder_last_file": { "name": "Síðast samstillt skrá" },
       "device_connection_type": { "name": "Tengingargerð" },
-      "device_address": { "name": "Netfang" },
+      "device_address": { "name": "Vistfang" },
       "device_client_version": { "name": "Útgáfa biðlara" },
       "device_last_seen": { "name": "Síðast séð" },
       "device_in_bytes": { "name": "Niðurhal" },

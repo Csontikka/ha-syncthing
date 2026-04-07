@@ -5,9 +5,9 @@
         "title": "Csatlakozás a Syncthing-hez",
         "description": "Add meg a Syncthing kapcsolati adatait.\nAz API kulcsot itt találod: Syncthing UI > Actions > Settings > API Key",
         "data": {
-          "host": "Hoszt",
+          "host": "Host",
           "port": "Port",
-          "api_key": "API kulcs",
+          "api_key": "API Key",
           "use_ssl": "HTTPS (SSL) használata",
           "verify_ssl": "SSL tanúsítvány ellenőrzése",
           "scan_interval": "Frissítési időköz (másodperc)"
@@ -23,7 +23,7 @@
         "title": "Syncthing újrahitelesítés",
         "description": "Az API kulcsod érvénytelen lett. Add meg az újat.",
         "data": {
-          "api_key": "API kulcs"
+          "api_key": "API Key"
         }
       }
     },
