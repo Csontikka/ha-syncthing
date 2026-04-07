@@ -59,6 +59,10 @@ This integration adds:
 4. Click **Download**
 5. Restart Home Assistant
 
+After setup, the integration appears in Settings → Integrations:
+
+![Integration card](https://raw.githubusercontent.com/Csontikka/ha-syncthing/master/images/integration_card.png)
+
 ### Manual
 
 1. Copy `custom_components/syncthing_extended/` to your HA `config/custom_components/` directory
@@ -69,6 +73,8 @@ This integration adds:
 1. Go to **Settings → Integrations → Add Integration**
 2. Search for **Syncthing**
 3. Enter your connection details:
+
+![Config flow](https://raw.githubusercontent.com/Csontikka/ha-syncthing/master/images/config_flow.png)
 
 | Parameter | Required | Default | Description |
 |-----------|----------|---------|-------------|
