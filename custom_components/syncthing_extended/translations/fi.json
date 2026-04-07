@@ -1,0 +1,90 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Yhdistä Syncthing-palveluun",
+        "description": "Syötä Syncthing-yhteystietosi.\nLöydät API-avaimesi: Syncthing-käyttöliittymä > Toiminnot > Asetukset > API-avain",
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "api_key": "API Key",
+          "use_ssl": "Käytä HTTPS:ää (SSL)",
+          "verify_ssl": "Tarkista SSL-varmenne",
+          "scan_interval": "Päivitysväli (sekuntia)"
+        },
+        "data_description": {
+          "host": "Syncthing-instanssin IP-osoite tai isäntänimi",
+          "port": "Oletus: 8384",
+          "api_key": "Löytyy Syncthing-käyttöliittymästä kohdasta Toiminnot > Asetukset",
+          "scan_interval": "Kuinka usein päivityksiä haetaan (10–300 sekuntia)"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Todenna Syncthing uudelleen",
+        "description": "Syncthing API-avaimesi ei ole enää voimassa. Syötä uusi avain.",
+        "data": { "api_key": "API Key" }
+      }
+    },
+    "error": {
+      "cannot_connect": "Ei voi muodostaa yhteyttä Syncthing-palveluun. Tarkista isäntä ja portti.",
+      "invalid_auth": "Virheellinen API-avain.",
+      "ssl_error": "SSL-varmenteen tarkistus epäonnistui. Poista käytöstä 'Tarkista SSL-varmenne', jos käytät itse allekirjoitettua varmennetta.",
+      "unknown": "Odottamaton virhe tapahtui."
+    },
+    "abort": {
+      "already_configured": "Tämä Syncthing-instanssi on jo määritetty."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "version": { "name": "Versio" },
+      "uptime": { "name": "Käynnissäoloaika" },
+      "my_id": { "name": "Laite-ID" },
+      "total_in_bytes": { "name": "Ladattu yhteensä" },
+      "total_out_bytes": { "name": "Lähetetty yhteensä" },
+      "folder_state": { "name": "Tila" },
+      "folder_completion": { "name": "Valmistuminen" },
+      "folder_need_bytes": { "name": "Tarvittavat tavut" },
+      "folder_need_files": { "name": "Tarvittavat tiedostot" },
+      "folder_global_bytes": { "name": "Kokonaiskoko" },
+      "folder_global_files": { "name": "Tiedostoja yhteensä" },
+      "folder_in_sync_bytes": { "name": "Synkronoitu koko" },
+      "folder_in_sync_files": { "name": "Synkronoidut tiedostot" },
+      "folder_local_bytes": { "name": "Paikallinen koko" },
+      "folder_local_files": { "name": "Paikalliset tiedostot" },
+      "folder_pull_errors": { "name": "Hakuvirheet" },
+      "folder_last_scan": { "name": "Viimeisin skannaus" },
+      "folder_last_file": { "name": "Viimeksi synkronoitu tiedosto" },
+      "device_connection_type": { "name": "Yhteystyyppi" },
+      "device_address": { "name": "Osoite" },
+      "device_client_version": { "name": "Asiakasversio" },
+      "device_last_seen": { "name": "Viimeksi nähty" },
+      "device_in_bytes": { "name": "Ladattu" },
+      "device_out_bytes": { "name": "Lähetetty" }
+    },
+    "binary_sensor": {
+      "running": { "name": "Käynnissä" },
+      "folder_error": { "name": "Virhe" },
+      "folder_syncing": { "name": "Synkronoidaan" },
+      "folder_paused": { "name": "Tauolla" },
+      "device_connected": { "name": "Yhdistetty" },
+      "device_paused": { "name": "Tauolla" }
+    },
+    "button": {
+      "scan_all": { "name": "Skannaa kaikki kansiot" },
+      "folder_scan": { "name": "Skannaa" },
+      "folder_pause": { "name": "Tauko" },
+      "folder_resume": { "name": "Jatka" },
+      "device_pause": { "name": "Tauko" },
+      "device_resume": { "name": "Jatka" }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Syncthing Extended -asetukset",
+        "data": { "scan_interval": "Päivitysväli (sekuntia)" }
+      }
+    }
+  }
+}

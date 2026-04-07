@@ -1,0 +1,90 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Conectare la Syncthing",
+        "description": "Introduceți detaliile de conexiune Syncthing.\nGăsiți cheia API în: Interfața Syncthing > Acțiuni > Setări > Cheie API",
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "api_key": "API Key",
+          "use_ssl": "Utilizați HTTPS (SSL)",
+          "verify_ssl": "Verificați certificatul SSL",
+          "scan_interval": "Interval de actualizare (secunde)"
+        },
+        "data_description": {
+          "host": "Adresa IP sau numele de gazdă al instanței Syncthing",
+          "port": "Implicit: 8384",
+          "api_key": "Se găsește în interfața Syncthing la Acțiuni > Setări",
+          "scan_interval": "Cât de des se verifică actualizările (10–300 secunde)"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Reautentificare Syncthing",
+        "description": "Cheia dvs. API Syncthing nu mai este validă. Introduceți una nouă.",
+        "data": { "api_key": "API Key" }
+      }
+    },
+    "error": {
+      "cannot_connect": "Nu se poate conecta la Syncthing. Verificați gazda și portul.",
+      "invalid_auth": "Cheie API invalidă.",
+      "ssl_error": "Verificarea certificatului SSL a eșuat. Dezactivați 'Verificați certificatul SSL' dacă utilizați un certificat autosemnat.",
+      "unknown": "A apărut o eroare neașteptată."
+    },
+    "abort": {
+      "already_configured": "Această instanță Syncthing este deja configurată."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "version": { "name": "Versiune" },
+      "uptime": { "name": "Timp de funcționare" },
+      "my_id": { "name": "ID dispozitiv" },
+      "total_in_bytes": { "name": "Total descărcat" },
+      "total_out_bytes": { "name": "Total încărcat" },
+      "folder_state": { "name": "Stare" },
+      "folder_completion": { "name": "Finalizare" },
+      "folder_need_bytes": { "name": "Octeți necesari" },
+      "folder_need_files": { "name": "Fișiere necesare" },
+      "folder_global_bytes": { "name": "Dimensiune totală" },
+      "folder_global_files": { "name": "Total fișiere" },
+      "folder_in_sync_bytes": { "name": "Dimensiune sincronizată" },
+      "folder_in_sync_files": { "name": "Fișiere sincronizate" },
+      "folder_local_bytes": { "name": "Dimensiune locală" },
+      "folder_local_files": { "name": "Fișiere locale" },
+      "folder_pull_errors": { "name": "Erori de descărcare" },
+      "folder_last_scan": { "name": "Ultima scanare" },
+      "folder_last_file": { "name": "Ultimul fișier sincronizat" },
+      "device_connection_type": { "name": "Tip conexiune" },
+      "device_address": { "name": "Adresă" },
+      "device_client_version": { "name": "Versiune client" },
+      "device_last_seen": { "name": "Văzut ultima dată" },
+      "device_in_bytes": { "name": "Descărcat" },
+      "device_out_bytes": { "name": "Încărcat" }
+    },
+    "binary_sensor": {
+      "running": { "name": "Rulează" },
+      "folder_error": { "name": "Eroare" },
+      "folder_syncing": { "name": "Se sincronizează" },
+      "folder_paused": { "name": "În pauză" },
+      "device_connected": { "name": "Conectat" },
+      "device_paused": { "name": "În pauză" }
+    },
+    "button": {
+      "scan_all": { "name": "Scanează toate folderele" },
+      "folder_scan": { "name": "Scanează" },
+      "folder_pause": { "name": "Pauză" },
+      "folder_resume": { "name": "Reluare" },
+      "device_pause": { "name": "Pauză" },
+      "device_resume": { "name": "Reluare" }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Opțiuni Syncthing Extended",
+        "data": { "scan_interval": "Interval de actualizare (secunde)" }
+      }
+    }
+  }
+}

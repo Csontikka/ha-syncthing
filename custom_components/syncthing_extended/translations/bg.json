@@ -1,0 +1,90 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Свързване към Syncthing",
+        "description": "Въведете данните за връзка с Syncthing.\nНамерете своя API ключ в: Интерфейс на Syncthing > Действия > Настройки > API ключ",
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "api_key": "API Key",
+          "use_ssl": "Използвай HTTPS (SSL)",
+          "verify_ssl": "Провери SSL сертификата",
+          "scan_interval": "Интервал на актуализация (секунди)"
+        },
+        "data_description": {
+          "host": "IP адрес или хостово име на Syncthing инстанцията",
+          "port": "По подразбиране: 8384",
+          "api_key": "Намира се в интерфейса на Syncthing под Действия > Настройки",
+          "scan_interval": "Колко често да се проверява за актуализации (10–300 секунди)"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Повторно удостоверяване на Syncthing",
+        "description": "Вашият Syncthing API ключ вече не е валиден. Моля, въведете нов.",
+        "data": { "api_key": "API Key" }
+      }
+    },
+    "error": {
+      "cannot_connect": "Не може да се свърже към Syncthing. Проверете хоста и порта.",
+      "invalid_auth": "Невалиден API ключ.",
+      "ssl_error": "Проверката на SSL сертификата е неуспешна. Изключете 'Провери SSL сертификата', ако използвате самоподписан сертификат.",
+      "unknown": "Възникна неочаквана грешка."
+    },
+    "abort": {
+      "already_configured": "Тази Syncthing инстанция вече е конфигурирана."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "version": { "name": "Версия" },
+      "uptime": { "name": "Работно време" },
+      "my_id": { "name": "Идентификатор на устройство" },
+      "total_in_bytes": { "name": "Общо изтеглено" },
+      "total_out_bytes": { "name": "Общо качено" },
+      "folder_state": { "name": "Състояние" },
+      "folder_completion": { "name": "Завършеност" },
+      "folder_need_bytes": { "name": "Необходими байтове" },
+      "folder_need_files": { "name": "Необходими файлове" },
+      "folder_global_bytes": { "name": "Общ размер" },
+      "folder_global_files": { "name": "Общо файлове" },
+      "folder_in_sync_bytes": { "name": "Синхронизиран размер" },
+      "folder_in_sync_files": { "name": "Синхронизирани файлове" },
+      "folder_local_bytes": { "name": "Локален размер" },
+      "folder_local_files": { "name": "Локални файлове" },
+      "folder_pull_errors": { "name": "Грешки при изтегляне" },
+      "folder_last_scan": { "name": "Последно сканиране" },
+      "folder_last_file": { "name": "Последно синхронизиран файл" },
+      "device_connection_type": { "name": "Тип връзка" },
+      "device_address": { "name": "Адрес" },
+      "device_client_version": { "name": "Версия на клиента" },
+      "device_last_seen": { "name": "Последно виждан" },
+      "device_in_bytes": { "name": "Изтеглено" },
+      "device_out_bytes": { "name": "Качено" }
+    },
+    "binary_sensor": {
+      "running": { "name": "Работи" },
+      "folder_error": { "name": "Грешка" },
+      "folder_syncing": { "name": "Синхронизира се" },
+      "folder_paused": { "name": "На пауза" },
+      "device_connected": { "name": "Свързан" },
+      "device_paused": { "name": "На пауза" }
+    },
+    "button": {
+      "scan_all": { "name": "Сканирай всички папки" },
+      "folder_scan": { "name": "Сканирай" },
+      "folder_pause": { "name": "Пауза" },
+      "folder_resume": { "name": "Продължи" },
+      "device_pause": { "name": "Пауза" },
+      "device_resume": { "name": "Продължи" }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Опции на Syncthing Extended",
+        "data": { "scan_interval": "Интервал на актуализация (секунди)" }
+      }
+    }
+  }
+}
