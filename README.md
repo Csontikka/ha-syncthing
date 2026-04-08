@@ -10,6 +10,9 @@
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=Csontikka_ha-syncthing-extended&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=Csontikka_ha-syncthing-extended)
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-donate-yellow.svg?style=plastic)](https://buymeacoffee.com/Csontikka)
 
+**Available in 30 languages:**
+🇬🇧 🇸🇦 🇧🇬 🇨🇿 🇩🇰 🇩🇪 🇬🇷 🇪🇸 🇫🇮 🇫🇷 🇮🇳 🇭🇺 🇮🇸 🇮🇹 🇯🇵 🇰🇷 🇱🇻 🇳🇴 🇳🇱 🇵🇱 🇧🇷 🇵🇹 🇷🇴 🇷🇺 🇸🇰 🇸🇪 🇹🇷 🇺🇦 🇻🇳 🇨🇳
+
 > **Note:** For best viewing experience, read this documentation on [GitHub](https://github.com/Csontikka/ha-syncthing-extended).
 
 Full-featured Home Assistant integration for [Syncthing](https://syncthing.net). Monitor folder sync status, device connectivity and traffic, trigger rescans, and pause/resume folders and devices — all from your HA dashboard. Supports multiple Syncthing instances simultaneously.
