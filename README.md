@@ -14,6 +14,8 @@ Full-featured Home Assistant integration for [Syncthing](https://syncthing.net).
 
 ## Why this instead of the built-in integration?
 
+This integration uses the same domain name (`syncthing`) as the built-in Home Assistant integration. When installed as a custom component, it automatically takes precedence — no duplicate entries, no conflicts. If you already have the built-in integration configured, this custom component will migrate your existing config entry on first load.
+
 The core Syncthing integration creates only one sensor per folder showing its state. That's it.
 
 This integration adds:
