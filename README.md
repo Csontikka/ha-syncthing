@@ -193,6 +193,45 @@ automation:
       - service: syncthing.scan_all
 ```
 
+## Performance & Database Tips
+
+This integration creates a large number of entities (sensors, binary sensors, buttons) per folder and device. A few tips to keep your database lean:
+
+### Disable unused entities
+
+If you don't need certain sensors, disable them individually:
+**Settings → Devices & Services → Syncthing** → click the device → find the entity → toggle it off.
+Disabled entities are not polled and generate no history.
+
+### Exclude from recorder
+
+High-frequency numeric sensors (traffic counters, uptime, bytes needed) can accumulate a lot of history. If you only care about the current state and not the history, exclude them from the recorder in `configuration.yaml`:
+
+```yaml
+recorder:
+  exclude:
+    entity_globs:
+      - sensor.syncthing_*_in_bytes
+      - sensor.syncthing_*_out_bytes
+      - sensor.syncthing_*_uptime
+      - sensor.syncthing_*_bytes_needed
+```
+
+Or exclude the entire integration and re-include only what you want to track:
+
+```yaml
+recorder:
+  exclude:
+    entity_globs:
+      - sensor.syncthing_*
+      - binary_sensor.syncthing_*
+  include:
+    entity_globs:
+      - binary_sensor.syncthing_*_running
+      - binary_sensor.syncthing_*_error
+      - sensor.syncthing_*_state
+```
+
 ## Troubleshooting
 
 ### Diagnostics Export
