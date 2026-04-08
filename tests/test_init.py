@@ -23,7 +23,7 @@ def make_entry_with_coordinator():
     coordinator = MagicMock()
     coordinator.data = build_mock_coordinator_data()
     coordinator.api = build_mock_api()
-    coordinator.async_request_refresh = AsyncMock()
+    coordinator.async_refresh = AsyncMock()
     entry = MagicMock()
     entry.runtime_data = coordinator
     return entry, coordinator
@@ -81,7 +81,7 @@ def test_handle_scan_folder_success():
         call.data = {"folder_id": "abcd-1234"}
         await handlers["scan_folder"](call)
         coordinator.api.scan_folder.assert_called_once_with("abcd-1234")
-        coordinator.async_request_refresh.assert_called_once()
+        coordinator.async_refresh.assert_called_once()
 
     asyncio.run(_run())
 

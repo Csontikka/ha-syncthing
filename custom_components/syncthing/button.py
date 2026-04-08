@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import logging
 
 from homeassistant.components.button import ButtonEntity
@@ -93,7 +94,8 @@ class SyncthingScanAllButton(CoordinatorEntity[SyncthingCoordinator], ButtonEnti
         """Trigger scan of all folders."""
         _LOGGER.debug("Button pressed: scan_all")
         await self.coordinator.api.scan_all_folders()
-        await self.coordinator.async_request_refresh()
+        await asyncio.sleep(1)
+        await self.coordinator.async_refresh()
 
 
 class SyncthingFolderScanButton(CoordinatorEntity[SyncthingCoordinator], ButtonEntity):
@@ -124,7 +126,8 @@ class SyncthingFolderScanButton(CoordinatorEntity[SyncthingCoordinator], ButtonE
         """Trigger scan of this folder."""
         _LOGGER.debug("Button pressed: scan_folder %s", self._folder_id)
         await self.coordinator.api.scan_folder(self._folder_id)
-        await self.coordinator.async_request_refresh()
+        await asyncio.sleep(1)
+        await self.coordinator.async_refresh()
 
 
 class SyncthingFolderPauseButton(CoordinatorEntity[SyncthingCoordinator], ButtonEntity):
@@ -155,7 +158,8 @@ class SyncthingFolderPauseButton(CoordinatorEntity[SyncthingCoordinator], Button
         """Pause this folder."""
         _LOGGER.debug("Button pressed: pause_folder %s", self._folder_id)
         await self.coordinator.api.pause_folder(self._folder_id)
-        await self.coordinator.async_request_refresh()
+        await asyncio.sleep(1)
+        await self.coordinator.async_refresh()
 
 
 class SyncthingFolderResumeButton(
@@ -188,7 +192,8 @@ class SyncthingFolderResumeButton(
         """Resume this folder."""
         _LOGGER.debug("Button pressed: resume_folder %s", self._folder_id)
         await self.coordinator.api.resume_folder(self._folder_id)
-        await self.coordinator.async_request_refresh()
+        await asyncio.sleep(1)
+        await self.coordinator.async_refresh()
 
 
 class SyncthingDevicePauseButton(CoordinatorEntity[SyncthingCoordinator], ButtonEntity):
@@ -219,7 +224,8 @@ class SyncthingDevicePauseButton(CoordinatorEntity[SyncthingCoordinator], Button
         """Pause this device."""
         _LOGGER.debug("Button pressed: pause_device %s", self._device_id)
         await self.coordinator.api.pause_device(self._device_id)
-        await self.coordinator.async_request_refresh()
+        await asyncio.sleep(1)
+        await self.coordinator.async_refresh()
 
 
 class SyncthingDeviceResumeButton(
@@ -252,4 +258,5 @@ class SyncthingDeviceResumeButton(
         """Resume this device."""
         _LOGGER.debug("Button pressed: resume_device %s", self._device_id)
         await self.coordinator.api.resume_device(self._device_id)
-        await self.coordinator.async_request_refresh()
+        await asyncio.sleep(1)
+        await self.coordinator.async_refresh()

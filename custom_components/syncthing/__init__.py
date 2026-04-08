@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import logging
 
 import voluptuous as vol
@@ -133,14 +134,16 @@ def _async_register_services(hass: HomeAssistant) -> None:
         _LOGGER.debug("Service: scan_folder %s", folder_id)
         if not await coordinator.api.scan_folder(folder_id):
             raise HomeAssistantError(f"Failed to scan folder {folder_id}")
-        await coordinator.async_request_refresh()
+        await asyncio.sleep(1)
+        await coordinator.async_refresh()
 
     async def handle_scan_all(call: ServiceCall) -> None:
         coordinator = _get_coordinator(hass)
         _LOGGER.debug("Service: scan_all")
         if not await coordinator.api.scan_all_folders():
             raise HomeAssistantError("Failed to scan all folders")
-        await coordinator.async_request_refresh()
+        await asyncio.sleep(1)
+        await coordinator.async_refresh()
 
     async def handle_pause_device(call: ServiceCall) -> None:
         coordinator = _get_coordinator(hass)
@@ -148,7 +151,8 @@ def _async_register_services(hass: HomeAssistant) -> None:
         _LOGGER.debug("Service: pause_device %s", device_id)
         if not await coordinator.api.pause_device(device_id):
             raise HomeAssistantError(f"Failed to pause device {device_id}")
-        await coordinator.async_request_refresh()
+        await asyncio.sleep(1)
+        await coordinator.async_refresh()
 
     async def handle_resume_device(call: ServiceCall) -> None:
         coordinator = _get_coordinator(hass)
@@ -156,7 +160,8 @@ def _async_register_services(hass: HomeAssistant) -> None:
         _LOGGER.debug("Service: resume_device %s", device_id)
         if not await coordinator.api.resume_device(device_id):
             raise HomeAssistantError(f"Failed to resume device {device_id}")
-        await coordinator.async_request_refresh()
+        await asyncio.sleep(1)
+        await coordinator.async_refresh()
 
     async def handle_pause_folder(call: ServiceCall) -> None:
         coordinator = _get_coordinator(hass)
@@ -164,7 +169,8 @@ def _async_register_services(hass: HomeAssistant) -> None:
         _LOGGER.debug("Service: pause_folder %s", folder_id)
         if not await coordinator.api.pause_folder(folder_id):
             raise HomeAssistantError(f"Failed to pause folder {folder_id}")
-        await coordinator.async_request_refresh()
+        await asyncio.sleep(1)
+        await coordinator.async_refresh()
 
     async def handle_resume_folder(call: ServiceCall) -> None:
         coordinator = _get_coordinator(hass)
@@ -172,21 +178,24 @@ def _async_register_services(hass: HomeAssistant) -> None:
         _LOGGER.debug("Service: resume_folder %s", folder_id)
         if not await coordinator.api.resume_folder(folder_id):
             raise HomeAssistantError(f"Failed to resume folder {folder_id}")
-        await coordinator.async_request_refresh()
+        await asyncio.sleep(1)
+        await coordinator.async_refresh()
 
     async def handle_pause_all(call: ServiceCall) -> None:
         coordinator = _get_coordinator(hass)
         _LOGGER.debug("Service: pause_all")
         if not await coordinator.api.pause_all():
             raise HomeAssistantError("Failed to pause all devices")
-        await coordinator.async_request_refresh()
+        await asyncio.sleep(1)
+        await coordinator.async_refresh()
 
     async def handle_resume_all(call: ServiceCall) -> None:
         coordinator = _get_coordinator(hass)
         _LOGGER.debug("Service: resume_all")
         if not await coordinator.api.resume_all():
             raise HomeAssistantError("Failed to resume all devices")
-        await coordinator.async_request_refresh()
+        await asyncio.sleep(1)
+        await coordinator.async_refresh()
 
     hass.services.async_register(
         DOMAIN,

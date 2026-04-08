@@ -18,7 +18,7 @@ def make_coordinator():
     coordinator = MagicMock()
     coordinator.data = build_mock_coordinator_data()
     coordinator.api = build_mock_api()
-    coordinator.async_request_refresh = AsyncMock()
+    coordinator.async_refresh = AsyncMock()
     return coordinator
 
 
@@ -39,7 +39,7 @@ def test_scan_all_button_press():
 
     coordinator = asyncio.run(_run())
     coordinator.api.scan_all_folders.assert_called_once()
-    coordinator.async_request_refresh.assert_called_once()
+    coordinator.async_refresh.assert_called_once()
 
 
 # --- SyncthingFolderScanButton ---
@@ -59,7 +59,7 @@ def test_folder_scan_button_press():
 
     coordinator = asyncio.run(_run())
     coordinator.api.scan_folder.assert_called_once_with("abcd-1234")
-    coordinator.async_request_refresh.assert_called_once()
+    coordinator.async_refresh.assert_called_once()
 
 
 # --- async_setup_entry ---
