@@ -1,6 +1,6 @@
 """Constants for Syncthing integration."""
 
-DOMAIN = "syncthing"
+DOMAIN = "syncthing_extended"
 DEFAULT_PORT = 8384
 DEFAULT_USE_SSL = True
 DEFAULT_VERIFY_SSL = False

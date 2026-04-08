@@ -33,32 +33,6 @@ _LOGGER = logging.getLogger(__name__)
 
 CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 
-DEFAULT_PORT_INT = 8384
-
-
-async def _async_migrate_core_entry(hass: HomeAssistant, entry: ConfigEntry) -> None:
-    """Migrate a core syncthing config entry to our format."""
-    from urllib.parse import urlparse
-
-    url = entry.data["url"]
-    parsed = urlparse(url)
-    use_ssl = parsed.scheme == "https"
-    host = parsed.hostname or "localhost"
-    port = parsed.port or (443 if use_ssl else DEFAULT_PORT_INT)
-    api_key = entry.data.get("api_key", entry.data.get("token", ""))
-
-    new_data = {
-        CONF_HOST: host,
-        CONF_PORT: port,
-        CONF_API_KEY: api_key,
-        CONF_USE_SSL: use_ssl,
-        CONF_VERIFY_SSL: entry.data.get(CONF_VERIFY_SSL, DEFAULT_VERIFY_SSL),
-        CONF_SCAN_INTERVAL: DEFAULT_SCAN_INTERVAL,
-    }
-    hass.config_entries.async_update_entry(entry, data=new_data)
-    _LOGGER.info("Migrated core Syncthing config entry to extended format")
-
-
 type SyncthingConfigEntry = ConfigEntry[SyncthingCoordinator]
 
 
@@ -70,8 +44,12 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
 
 async def async_setup_entry(hass: HomeAssistant, entry: SyncthingConfigEntry) -> bool:
     """Set up Syncthing from a config entry."""
-    if CONF_HOST not in entry.data and "url" in entry.data:
-        await _async_migrate_core_entry(hass, entry)
+    if hass.config_entries.async_entries("syncthing"):
+        _LOGGER.warning(
+            "The built-in Syncthing integration is also active. "
+            "We recommend disabling it to avoid duplicate entities and "
+            "potential conflicts. Go to Settings → Integrations → Syncthing → Delete"
+        )
 
     use_ssl = entry.data.get(CONF_USE_SSL, DEFAULT_USE_SSL)
     verify_ssl = entry.data.get(CONF_VERIFY_SSL, DEFAULT_VERIFY_SSL)

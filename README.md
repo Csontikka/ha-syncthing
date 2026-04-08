@@ -1,23 +1,20 @@
-# Syncthing — Home Assistant Integration
+# Syncthing Extended — Home Assistant Integration
 
-![Syncthing](https://raw.githubusercontent.com/Csontikka/ha-syncthing/master/images/banner.svg)
+![Syncthing](https://raw.githubusercontent.com/Csontikka/ha-syncthing-extended/master/images/banner.svg)
 
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/Csontikka/ha-syncthing?style=plastic)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/Csontikka/ha-syncthing-extended?style=plastic)
 [![HACS Custom](https://img.shields.io/badge/HACS-Custom-41BDF5.svg?style=plastic)](https://github.com/hacs/integration)
-[![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg?style=plastic)](https://github.com/Csontikka/ha-syncthing/blob/master/LICENSE)
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=Csontikka_ha-syncthing&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=Csontikka_ha-syncthing)
-[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=Csontikka_ha-syncthing&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=Csontikka_ha-syncthing)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=Csontikka_ha-syncthing&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=Csontikka_ha-syncthing)
-[![Replaces Core Integration](https://img.shields.io/badge/Replaces-Core%20Integration-red.svg?style=plastic&logo=home-assistant&logoColor=white)](https://www.home-assistant.io/integrations/syncthing/)
+[![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg?style=plastic)](https://github.com/Csontikka/ha-syncthing-extended/blob/master/LICENSE)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=Csontikka_ha-syncthing-extended&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=Csontikka_ha-syncthing-extended)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=Csontikka_ha-syncthing-extended&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=Csontikka_ha-syncthing-extended)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=Csontikka_ha-syncthing-extended&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=Csontikka_ha-syncthing-extended)
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-donate-yellow.svg?style=plastic)](https://buymeacoffee.com/Csontikka)
 
-> **Note:** For best viewing experience, read this documentation on [GitHub](https://github.com/Csontikka/ha-syncthing).
+> **Note:** For best viewing experience, read this documentation on [GitHub](https://github.com/Csontikka/ha-syncthing-extended).
 
 Full-featured Home Assistant integration for [Syncthing](https://syncthing.net). Monitor folder sync status, device connectivity and traffic, trigger rescans, and pause/resume folders and devices — all from your HA dashboard. Supports multiple Syncthing instances simultaneously.
 
 ## Why this instead of the built-in integration?
-
-This integration uses the same domain name (`syncthing`) as the built-in Home Assistant integration. When installed as a custom component, it automatically takes precedence — no duplicate entries, no conflicts. If you already have the built-in integration configured, this custom component will migrate your existing config entry on first load.
 
 The core Syncthing integration creates only one sensor per folder showing its state. That's it.
 
@@ -45,15 +42,15 @@ This integration adds:
 
 **System device** — version, uptime, running state, total traffic and scan button:
 
-![Syncthing system device](https://raw.githubusercontent.com/Csontikka/ha-syncthing/master/images/device_main.png)
+![Syncthing system device](https://raw.githubusercontent.com/Csontikka/ha-syncthing-extended/master/images/device_main.png)
 
 **Folder** — sync state, completion, controls and all folder sensors:
 
-![Syncthing folder](https://raw.githubusercontent.com/Csontikka/ha-syncthing/master/images/folder_syncthing_photos.png)
+![Syncthing folder](https://raw.githubusercontent.com/Csontikka/ha-syncthing-extended/master/images/folder_syncthing_photos.png)
 
 **Remote device** — connectivity, traffic, pause/resume controls and diagnostic sensors:
 
-![Syncthing remote device](https://raw.githubusercontent.com/Csontikka/ha-syncthing/master/images/device_virtualwin10.png)
+![Syncthing remote device](https://raw.githubusercontent.com/Csontikka/ha-syncthing-extended/master/images/device_virtualwin10.png)
 
 ## Installation
 
@@ -61,17 +58,17 @@ This integration adds:
 
 1. Open HACS → Integrations
 2. Click the three-dot menu → **Custom repositories**
-3. Add `https://github.com/Csontikka/ha-syncthing` with category **Integration**
+3. Add `https://github.com/Csontikka/ha-syncthing-extended` with category **Integration**
 4. Click **Download**
 5. Restart Home Assistant
 
 After setup, the integration appears in Settings → Integrations:
 
-![Integration card](https://raw.githubusercontent.com/Csontikka/ha-syncthing/master/images/integration_card.png)
+![Integration card](https://raw.githubusercontent.com/Csontikka/ha-syncthing-extended/master/images/integration_card.png)
 
 ### Manual
 
-1. Copy `custom_components/syncthing/` to your HA `config/custom_components/` directory
+1. Copy `custom_components/syncthing_extended/` to your HA `config/custom_components/` directory
 2. Restart Home Assistant
 
 ## Configuration
@@ -80,7 +77,7 @@ After setup, the integration appears in Settings → Integrations:
 2. Search for **Syncthing**
 3. Enter your connection details:
 
-![Config flow](https://raw.githubusercontent.com/Csontikka/ha-syncthing/master/images/config_flow.png)
+![Config flow](https://raw.githubusercontent.com/Csontikka/ha-syncthing-extended/master/images/config_flow.png)
 
 | Parameter | Required | Default | Description |
 |-----------|----------|---------|-------------|
@@ -93,7 +90,7 @@ After setup, the integration appears in Settings → Integrations:
 
 ### Finding your API key
 
-![Syncthing API key location](https://raw.githubusercontent.com/Csontikka/ha-syncthing/master/images/syncthing_settings_apikey.png)
+![Syncthing API key location](https://raw.githubusercontent.com/Csontikka/ha-syncthing-extended/master/images/syncthing_settings_apikey.png)
 
 - **Syncthing UI**: Actions → Settings → right panel → API Key
 - **Linux**: `~/.local/state/syncthing/config.xml` → `<gui><apikey>…</apikey></gui>`
@@ -163,14 +160,14 @@ If your API key changes, Home Assistant will show a re-authentication prompt. Cl
 
 | Service | Parameters | Description |
 |---------|-----------|-------------|
-| `syncthing.scan_folder` | `folder_id` | Trigger rescan of one folder |
-| `syncthing.scan_all` | — | Trigger rescan of all folders |
-| `syncthing.pause_folder` | `folder_id` | Pause a specific folder |
-| `syncthing.resume_folder` | `folder_id` | Resume a specific folder |
-| `syncthing.pause_device` | `device_id` | Pause sync with a device |
-| `syncthing.resume_device` | `device_id` | Resume sync with a device |
-| `syncthing.pause_all` | — | Pause all devices |
-| `syncthing.resume_all` | — | Resume all devices |
+| `syncthing_extended.scan_folder` | `folder_id` | Trigger rescan of one folder |
+| `syncthing_extended.scan_all` | — | Trigger rescan of all folders |
+| `syncthing_extended.pause_folder` | `folder_id` | Pause a specific folder |
+| `syncthing_extended.resume_folder` | `folder_id` | Resume a specific folder |
+| `syncthing_extended.pause_device` | `device_id` | Pause sync with a device |
+| `syncthing_extended.resume_device` | `device_id` | Resume sync with a device |
+| `syncthing_extended.pause_all` | — | Pause all devices |
+| `syncthing_extended.resume_all` | — | Resume all devices |
 
 ### Example automation
 
@@ -179,7 +176,7 @@ automation:
   - alias: "Alert when Syncthing folder has errors"
     trigger:
       - platform: state
-        entity_id: binary_sensor.syncthing_folder_documents_error
+        entity_id: binary_sensor.syncthing_extended_folder_documents_error
         to: "on"
     action:
       - service: notify.mobile_app
@@ -192,12 +189,12 @@ automation:
         entity_id: sensor.backup_status
         to: "completed"
     action:
-      - service: syncthing.scan_all
+      - service: syncthing_extended.scan_all
 
   - alias: "Alert when device offline for 1 hour"
     trigger:
       - platform: state
-        entity_id: binary_sensor.syncthing_device_nas_connected
+        entity_id: binary_sensor.syncthing_extended_device_nas_connected
         to: "off"
         for: "01:00:00"
     action:
@@ -224,10 +221,10 @@ High-frequency numeric sensors (traffic counters, uptime, bytes needed) can accu
 recorder:
   exclude:
     entity_globs:
-      - sensor.syncthing_*_in_bytes
-      - sensor.syncthing_*_out_bytes
-      - sensor.syncthing_*_uptime
-      - sensor.syncthing_*_bytes_needed
+      - sensor.syncthing_extended_*_in_bytes
+      - sensor.syncthing_extended_*_out_bytes
+      - sensor.syncthing_extended_*_uptime
+      - sensor.syncthing_extended_*_bytes_needed
 ```
 
 Or exclude the entire integration and re-include only what you want to track:
@@ -236,13 +233,13 @@ Or exclude the entire integration and re-include only what you want to track:
 recorder:
   exclude:
     entity_globs:
-      - sensor.syncthing_*
-      - binary_sensor.syncthing_*
+      - sensor.syncthing_extended_*
+      - binary_sensor.syncthing_extended_*
   include:
     entity_globs:
-      - binary_sensor.syncthing_*_running
-      - binary_sensor.syncthing_*_error
-      - sensor.syncthing_*_state
+      - binary_sensor.syncthing_extended_*_running
+      - binary_sensor.syncthing_extended_*_error
+      - sensor.syncthing_extended_*_state
 ```
 
 ## Troubleshooting
@@ -254,7 +251,7 @@ Download the integration diagnostics file for bug reports — it includes integr
 1. Go to **Settings → Devices & Services**
 2. Find **Syncthing** → click the integration
 3. Click the **three-dot menu** → **Download diagnostics**
-4. Attach the `.json` file to your [GitHub issue](https://github.com/Csontikka/ha-syncthing/issues)
+4. Attach the `.json` file to your [GitHub issue](https://github.com/Csontikka/ha-syncthing-extended/issues)
 
 ### Debug Logs
 
@@ -264,7 +261,7 @@ To see detailed logs in the HA log viewer, add to `configuration.yaml`:
 logger:
   default: info
   logs:
-    custom_components.syncthing: debug
+    custom_components.syncthing_extended: debug
 ```
 
 This enables per-request API traces, coordinator update summaries, and button/service call tracking.
@@ -273,7 +270,7 @@ This enables per-request API traces, coordinator update summaries, and button/se
 
 1. Go to **Settings → Devices & Services → Syncthing**
 2. Click the three-dot menu → **Delete**
-3. Optionally remove `custom_components/syncthing/` and restart HA
+3. Optionally remove `custom_components/syncthing_extended/` and restart HA
 
 ## Supported versions
 
@@ -282,6 +279,6 @@ This enables per-request API traces, coordinator update summaries, and button/se
 
 ## Support
 
-Found a bug or have an idea? [Open an issue](https://github.com/Csontikka/ha-syncthing/issues) — feedback and feature requests are welcome!
+Found a bug or have an idea? [Open an issue](https://github.com/Csontikka/ha-syncthing-extended/issues) — feedback and feature requests are welcome!
 
 If you find this integration useful, consider [buying me a coffee](https://buymeacoffee.com/Csontikka).
