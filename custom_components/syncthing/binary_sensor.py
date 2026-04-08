@@ -190,6 +190,7 @@ class SyncthingSystemBinarySensor(
 
     entity_description: SyncthingBinarySensorEntityDescription
     _attr_has_entity_name = True
+    _unrecorded_attributes = frozenset({"goroutines", "alloc_bytes"})
 
     def __init__(
         self,

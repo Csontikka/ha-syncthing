@@ -411,6 +411,7 @@ class SyncthingFolderSensor(CoordinatorEntity[SyncthingCoordinator], SensorEntit
 
     entity_description: SyncthingFolderSensorEntityDescription
     _attr_has_entity_name = True
+    _unrecorded_attributes = frozenset({"sequence"})
 
     def __init__(
         self,
