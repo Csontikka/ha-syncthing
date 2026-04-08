@@ -11,6 +11,8 @@
 [![Replaces Core Integration](https://img.shields.io/badge/Replaces-Core%20Integration-red.svg?style=plastic&logo=home-assistant&logoColor=white)](https://www.home-assistant.io/integrations/syncthing/)
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-donate-yellow.svg?style=plastic)](https://buymeacoffee.com/Csontikka)
 
+> **Note:** For best viewing experience, read this documentation on [GitHub](https://github.com/Csontikka/ha-syncthing).
+
 Full-featured Home Assistant integration for [Syncthing](https://syncthing.net). Monitor folder sync status, device connectivity and traffic, trigger rescans, and pause/resume folders and devices — all from your HA dashboard. Supports multiple Syncthing instances simultaneously.
 
 ## Why this instead of the built-in integration?
