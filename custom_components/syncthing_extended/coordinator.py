@@ -8,9 +8,10 @@ from datetime import timedelta
 from typing import Any
 
 from homeassistant.core import HomeAssistant
+from homeassistant.exceptions import ConfigEntryAuthFailed
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
-from .api import SyncthingApi, SyncthingApiError
+from .api import SyncthingApi, SyncthingApiError, SyncthingAuthError
 from .const import DEFAULT_SCAN_INTERVAL, DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
@@ -99,5 +100,9 @@ class SyncthingCoordinator(DataUpdateCoordinator[SyncthingData]):
                 device_stats=device_stats,
             )
 
+        except SyncthingAuthError as err:
+            raise ConfigEntryAuthFailed(
+                "Invalid API key — re-authenticate in Settings → Integrations"
+            ) from err
         except SyncthingApiError as err:
             raise UpdateFailed(f"Error communicating with Syncthing: {err}") from err

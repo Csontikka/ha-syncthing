@@ -6,7 +6,7 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
-from custom_components.syncthing_extended.api import SyncthingApiError
+from custom_components.syncthing_extended.api import SyncthingApiError, SyncthingAuthError
 from custom_components.syncthing_extended.coordinator import (
     SyncthingCoordinator,
     SyncthingData,
@@ -77,6 +77,19 @@ def test_coordinator_partial_folder_failure():
     data = asyncio.run(_run())
     assert data.folder_status["abcd-1234"]["state"] == "idle"
     assert data.folder_status["efgh-5678"] == {}
+
+
+def test_coordinator_raises_config_entry_auth_failed_on_auth_error():
+    from homeassistant.exceptions import ConfigEntryAuthFailed
+
+    async def _run():
+        api = build_mock_api()
+        api.get_version = AsyncMock(side_effect=SyncthingAuthError("Invalid API key"))
+        coordinator = SyncthingCoordinator(make_hass(), api)
+        await coordinator._async_update_data()
+
+    with pytest.raises(ConfigEntryAuthFailed):
+        asyncio.run(_run())
 
 
 def test_coordinator_my_id_in_devices():
