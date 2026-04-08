@@ -135,7 +135,7 @@ class SyncthingFolderPauseButton(CoordinatorEntity[SyncthingCoordinator], Button
 
     _attr_has_entity_name = True
     _attr_translation_key = "folder_pause"
-    _attr_icon = "mdi:folder-off-outline"
+    _attr_icon = "mdi:folder-lock"
 
     def __init__(
         self,
