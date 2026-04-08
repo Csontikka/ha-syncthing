@@ -5,9 +5,9 @@
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Csontikka/ha-syncthing-extended?style=plastic)
 [![HACS Custom](https://img.shields.io/badge/HACS-Custom-41BDF5.svg?style=plastic)](https://github.com/hacs/integration)
 [![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg?style=plastic)](https://github.com/Csontikka/ha-syncthing-extended/blob/master/LICENSE)
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=3cfe0db651832242e234c7b38fc6febbcc58d0b9&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=3cfe0db651832242e234c7b38fc6febbcc58d0b9)
-[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=3cfe0db651832242e234c7b38fc6febbcc58d0b9&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=3cfe0db651832242e234c7b38fc6febbcc58d0b9)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=3cfe0db651832242e234c7b38fc6febbcc58d0b9&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=3cfe0db651832242e234c7b38fc6febbcc58d0b9)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=Csontikka_ha-syncthing-extended&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=Csontikka_ha-syncthing-extended)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=Csontikka_ha-syncthing-extended&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=Csontikka_ha-syncthing-extended)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=Csontikka_ha-syncthing-extended&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=Csontikka_ha-syncthing-extended)
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-donate-yellow.svg?style=plastic)](https://buymeacoffee.com/Csontikka)
 
 > **Note:** For best viewing experience, read this documentation on [GitHub](https://github.com/Csontikka/ha-syncthing-extended).
