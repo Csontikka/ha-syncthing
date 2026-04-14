@@ -28,3 +28,4 @@ test_ssl_error_ui.py
 ssl_test_*.png
 screenshots_targeted/
 .omc/
+brand_icons/
