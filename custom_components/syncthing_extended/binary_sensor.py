@@ -14,11 +14,10 @@ from homeassistant.components.binary_sensor import (
 from homeassistant.const import EntityCategory
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from . import SyncthingConfigEntry
-from .const import DOMAIN
 from .coordinator import SyncthingCoordinator, SyncthingData
+from .entity import SyncthingDeviceEntity, SyncthingFolderEntity, SyncthingSystemEntity
 
 PARALLEL_UPDATES = 1
 
@@ -182,13 +181,10 @@ async def async_setup_entry(
 # --- Entity classes ---
 
 
-class SyncthingSystemBinarySensor(
-    CoordinatorEntity[SyncthingCoordinator], BinarySensorEntity
-):
+class SyncthingSystemBinarySensor(SyncthingSystemEntity, BinarySensorEntity):
     """Binary sensor for system-level Syncthing status."""
 
     entity_description: SyncthingBinarySensorEntityDescription
-    _attr_has_entity_name = True
     _unrecorded_attributes = frozenset({"goroutines", "alloc_bytes"})
 
     def __init__(
@@ -197,17 +193,9 @@ class SyncthingSystemBinarySensor(
         description: SyncthingBinarySensorEntityDescription,
         entry_id: str,
     ) -> None:
-        super().__init__(coordinator)
+        super().__init__(coordinator, entry_id)
         self.entity_description = description
         self._attr_unique_id = f"{entry_id}_{description.key}"
-        self._attr_device_info = {
-            "identifiers": {(DOMAIN, entry_id)},
-            "name": "Syncthing",
-            "manufacturer": "Syncthing Foundation",
-            "sw_version": coordinator.data.version.get("version")
-            if coordinator.data
-            else None,
-        }
 
     @property
     def is_on(self) -> bool | None:
@@ -222,13 +210,10 @@ class SyncthingSystemBinarySensor(
         return None
 
 
-class SyncthingFolderBinarySensor(
-    CoordinatorEntity[SyncthingCoordinator], BinarySensorEntity
-):
+class SyncthingFolderBinarySensor(SyncthingFolderEntity, BinarySensorEntity):
     """Binary sensor for per-folder Syncthing status."""
 
     entity_description: SyncthingFolderBinarySensorEntityDescription
-    _attr_has_entity_name = True
 
     def __init__(
         self,
@@ -238,16 +223,9 @@ class SyncthingFolderBinarySensor(
         folder_id: str,
         folder_label: str,
     ) -> None:
-        super().__init__(coordinator)
+        super().__init__(coordinator, entry_id, folder_id, folder_label)
         self.entity_description = description
-        self._folder_id = folder_id
         self._attr_unique_id = f"{entry_id}_folder_{folder_id}_{description.key}"
-        self._attr_device_info = {
-            "identifiers": {(DOMAIN, f"{entry_id}_folder_{folder_id}")},
-            "name": f"Syncthing Folder: {folder_label}",
-            "manufacturer": "Syncthing Foundation",
-            "via_device": (DOMAIN, entry_id),
-        }
 
     @property
     def is_on(self) -> bool | None:
@@ -264,13 +242,10 @@ class SyncthingFolderBinarySensor(
         return None
 
 
-class SyncthingDeviceBinarySensor(
-    CoordinatorEntity[SyncthingCoordinator], BinarySensorEntity
-):
+class SyncthingDeviceBinarySensor(SyncthingDeviceEntity, BinarySensorEntity):
     """Binary sensor for per-device Syncthing status."""
 
     entity_description: SyncthingDeviceBinarySensorEntityDescription
-    _attr_has_entity_name = True
 
     def __init__(
         self,
@@ -280,16 +255,9 @@ class SyncthingDeviceBinarySensor(
         device_id: str,
         device_name: str,
     ) -> None:
-        super().__init__(coordinator)
+        super().__init__(coordinator, entry_id, device_id, device_name)
         self.entity_description = description
-        self._device_id = device_id
         self._attr_unique_id = f"{entry_id}_device_{device_id}_{description.key}"
-        self._attr_device_info = {
-            "identifiers": {(DOMAIN, f"{entry_id}_device_{device_id}")},
-            "name": f"Syncthing Device: {device_name}",
-            "manufacturer": "Syncthing Foundation",
-            "via_device": (DOMAIN, entry_id),
-        }
 
     @property
     def is_on(self) -> bool | None:

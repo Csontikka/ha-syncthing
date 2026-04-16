@@ -5,6 +5,10 @@ import asyncio
 from unittest.mock import AsyncMock, MagicMock
 
 from custom_components.syncthing_extended.button import (
+    SyncthingDevicePauseButton,
+    SyncthingDeviceResumeButton,
+    SyncthingFolderPauseButton,
+    SyncthingFolderResumeButton,
     SyncthingFolderScanButton,
     SyncthingScanAllButton,
     async_setup_entry,
@@ -87,3 +91,69 @@ def test_async_setup_entry_creates_buttons():
     assert types.count("SyncthingFolderResumeButton") == 2
     assert types.count("SyncthingDevicePauseButton") == 1
     assert types.count("SyncthingDeviceResumeButton") == 1
+
+
+# --- SyncthingFolderPauseButton / ResumeButton press ---
+
+def test_folder_pause_button_press():
+    async def _run():
+        coordinator = make_coordinator()
+        coordinator.api.pause_folder = AsyncMock(return_value=True)
+        button = SyncthingFolderPauseButton(coordinator, ENTRY_ID, "abcd-1234", "Documents")
+        await button.async_press()
+        return coordinator
+
+    coordinator = asyncio.run(_run())
+    coordinator.api.pause_folder.assert_called_once_with("abcd-1234")
+    coordinator.async_refresh.assert_called_once()
+
+
+def test_folder_resume_button_press():
+    async def _run():
+        coordinator = make_coordinator()
+        coordinator.api.resume_folder = AsyncMock(return_value=True)
+        button = SyncthingFolderResumeButton(coordinator, ENTRY_ID, "abcd-1234", "Documents")
+        await button.async_press()
+        return coordinator
+
+    coordinator = asyncio.run(_run())
+    coordinator.api.resume_folder.assert_called_once_with("abcd-1234")
+    coordinator.async_refresh.assert_called_once()
+
+
+# --- SyncthingDevicePauseButton / ResumeButton press ---
+
+def test_device_pause_button_press():
+    async def _run():
+        coordinator = make_coordinator()
+        button = SyncthingDevicePauseButton(coordinator, ENTRY_ID, "DEV123", "Laptop")
+        await button.async_press()
+        return coordinator
+
+    coordinator = asyncio.run(_run())
+    coordinator.api.pause_device.assert_called_once_with("DEV123")
+    coordinator.async_refresh.assert_called_once()
+
+
+def test_device_resume_button_press():
+    async def _run():
+        coordinator = make_coordinator()
+        button = SyncthingDeviceResumeButton(coordinator, ENTRY_ID, "DEV123", "Laptop")
+        await button.async_press()
+        return coordinator
+
+    coordinator = asyncio.run(_run())
+    coordinator.api.resume_device.assert_called_once_with("DEV123")
+    coordinator.async_refresh.assert_called_once()
+
+
+def test_folder_pause_button_unique_id():
+    coordinator = make_coordinator()
+    button = SyncthingFolderPauseButton(coordinator, ENTRY_ID, "abcd-1234", "Documents")
+    assert button.unique_id == f"{ENTRY_ID}_folder_abcd-1234_pause"
+
+
+def test_device_pause_button_unique_id():
+    coordinator = make_coordinator()
+    button = SyncthingDevicePauseButton(coordinator, ENTRY_ID, "DEV123", "Laptop")
+    assert button.unique_id == f"{ENTRY_ID}_device_DEV123_pause"

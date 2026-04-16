@@ -92,6 +92,25 @@ def test_coordinator_raises_config_entry_auth_failed_on_auth_error():
         asyncio.run(_run())
 
 
+def test_coordinator_partial_completion_failure():
+    """Covers coordinator.py 76-79 (folder_completion error path for paused folder)."""
+    async def _run():
+        api = build_mock_api()
+
+        async def completion_side_effect(fid):
+            if fid == "efgh-5678":
+                raise SyncthingApiError("404 Not Found (paused)")
+            return MOCK_FOLDER_COMPLETION.get(fid, {})
+
+        api.get_folder_completion = AsyncMock(side_effect=completion_side_effect)
+        coordinator = SyncthingCoordinator(make_hass(), api)
+        return await coordinator._async_update_data()
+
+    data = asyncio.run(_run())
+    assert data.folder_completion["abcd-1234"]["completion"] == pytest.approx(99.9937)
+    assert data.folder_completion["efgh-5678"] == {}
+
+
 def test_coordinator_my_id_in_devices():
     async def _run():
         api = build_mock_api()

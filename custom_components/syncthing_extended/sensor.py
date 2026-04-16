@@ -16,11 +16,10 @@ from homeassistant.components.sensor import (
 from homeassistant.const import EntityCategory, UnitOfInformation, UnitOfTime
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from . import SyncthingConfigEntry
-from .const import DOMAIN
 from .coordinator import SyncthingCoordinator, SyncthingData
+from .entity import SyncthingDeviceEntity, SyncthingFolderEntity, SyncthingSystemEntity
 
 PARALLEL_UPDATES = 1
 
@@ -371,11 +370,10 @@ async def async_setup_entry(
 # --- Entity classes ---
 
 
-class SyncthingSystemSensor(CoordinatorEntity[SyncthingCoordinator], SensorEntity):
+class SyncthingSystemSensor(SyncthingSystemEntity, SensorEntity):
     """Sensor for system-level Syncthing data."""
 
     entity_description: SyncthingSensorEntityDescription
-    _attr_has_entity_name = True
 
     def __init__(
         self,
@@ -383,17 +381,9 @@ class SyncthingSystemSensor(CoordinatorEntity[SyncthingCoordinator], SensorEntit
         description: SyncthingSensorEntityDescription,
         entry_id: str,
     ) -> None:
-        super().__init__(coordinator)
+        super().__init__(coordinator, entry_id)
         self.entity_description = description
         self._attr_unique_id = f"{entry_id}_{description.key}"
-        self._attr_device_info = {
-            "identifiers": {(DOMAIN, entry_id)},
-            "name": "Syncthing",
-            "manufacturer": "Syncthing Foundation",
-            "sw_version": coordinator.data.version.get("version")
-            if coordinator.data
-            else None,
-        }
 
     @property
     def native_value(self) -> Any:
@@ -408,11 +398,10 @@ class SyncthingSystemSensor(CoordinatorEntity[SyncthingCoordinator], SensorEntit
         return None
 
 
-class SyncthingFolderSensor(CoordinatorEntity[SyncthingCoordinator], SensorEntity):
+class SyncthingFolderSensor(SyncthingFolderEntity, SensorEntity):
     """Sensor for per-folder Syncthing data."""
 
     entity_description: SyncthingFolderSensorEntityDescription
-    _attr_has_entity_name = True
     _unrecorded_attributes = frozenset({"sequence"})
 
     def __init__(
@@ -423,16 +412,9 @@ class SyncthingFolderSensor(CoordinatorEntity[SyncthingCoordinator], SensorEntit
         folder_id: str,
         folder_label: str,
     ) -> None:
-        super().__init__(coordinator)
+        super().__init__(coordinator, entry_id, folder_id, folder_label)
         self.entity_description = description
-        self._folder_id = folder_id
         self._attr_unique_id = f"{entry_id}_folder_{folder_id}_{description.key}"
-        self._attr_device_info = {
-            "identifiers": {(DOMAIN, f"{entry_id}_folder_{folder_id}")},
-            "name": f"Syncthing Folder: {folder_label}",
-            "manufacturer": "Syncthing Foundation",
-            "via_device": (DOMAIN, entry_id),
-        }
 
     @property
     def native_value(self) -> Any:
@@ -449,11 +431,10 @@ class SyncthingFolderSensor(CoordinatorEntity[SyncthingCoordinator], SensorEntit
         return None
 
 
-class SyncthingDeviceSensor(CoordinatorEntity[SyncthingCoordinator], SensorEntity):
+class SyncthingDeviceSensor(SyncthingDeviceEntity, SensorEntity):
     """Sensor for per-device Syncthing data."""
 
     entity_description: SyncthingDeviceSensorEntityDescription
-    _attr_has_entity_name = True
 
     def __init__(
         self,
@@ -463,16 +444,9 @@ class SyncthingDeviceSensor(CoordinatorEntity[SyncthingCoordinator], SensorEntit
         device_id: str,
         device_name: str,
     ) -> None:
-        super().__init__(coordinator)
+        super().__init__(coordinator, entry_id, device_id, device_name)
         self.entity_description = description
-        self._device_id = device_id
         self._attr_unique_id = f"{entry_id}_device_{device_id}_{description.key}"
-        self._attr_device_info = {
-            "identifiers": {(DOMAIN, f"{entry_id}_device_{device_id}")},
-            "name": f"Syncthing Device: {device_name}",
-            "manufacturer": "Syncthing Foundation",
-            "via_device": (DOMAIN, entry_id),
-        }
 
     @property
     def native_value(self) -> Any:

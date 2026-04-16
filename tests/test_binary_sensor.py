@@ -246,3 +246,20 @@ def test_async_setup_entry_creates_entities():
     assert "SyncthingSystemBinarySensor" in types
     assert "SyncthingFolderBinarySensor" in types
     assert "SyncthingDeviceBinarySensor" in types
+
+
+def test_device_binary_sensor_extra_state_attributes_with_attr_fn():
+    """Covers binary_sensor.py attr_fn branch for device binary sensor (line 271)."""
+    from custom_components.syncthing_extended.binary_sensor import (
+        SyncthingDeviceBinarySensorEntityDescription,
+    )
+
+    desc = SyncthingDeviceBinarySensorEntityDescription(
+        key="test_attrs",
+        translation_key="test_attrs",
+        value_fn=lambda data, did: True,
+        attr_fn=lambda data, did: {"probe": did[:4]},
+    )
+    coordinator = make_coordinator()
+    sensor = SyncthingDeviceBinarySensor(coordinator, desc, ENTRY_ID, DEVICE_ID, "Laptop")
+    assert sensor.extra_state_attributes == {"probe": DEVICE_ID[:4]}

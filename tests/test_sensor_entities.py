@@ -297,3 +297,20 @@ def test_sensor_async_setup_entry_creates_entities():
     assert "SyncthingSystemSensor" in types
     assert "SyncthingFolderSensor" in types
     assert "SyncthingDeviceSensor" in types
+
+
+def test_device_sensor_extra_state_attributes_with_attr_fn():
+    """Covers sensor.py attr_fn branch for device sensor (line 460)."""
+    from custom_components.syncthing_extended.sensor import (
+        SyncthingDeviceSensorEntityDescription,
+    )
+
+    desc = SyncthingDeviceSensorEntityDescription(
+        key="test_attrs",
+        translation_key="test_attrs",
+        value_fn=lambda data, did: "ok",
+        attr_fn=lambda data, did: {"tag": did[:4], "present": True},
+    )
+    coordinator = make_coordinator()
+    sensor = SyncthingDeviceSensor(coordinator, desc, ENTRY_ID, DEVICE_ID, "Laptop")
+    assert sensor.extra_state_attributes == {"tag": DEVICE_ID[:4], "present": True}

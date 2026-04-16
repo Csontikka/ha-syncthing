@@ -47,6 +47,7 @@ jobs:
             --cov=custom_components/syncthing_extended \
             --cov-report=xml:coverage.xml \
             --cov-report=term-missing \
+            --cov-fail-under=95 \
             -v
       - name: Upload coverage artifact
         if: always()

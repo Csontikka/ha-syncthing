@@ -8,11 +8,10 @@ import logging
 from homeassistant.components.button import ButtonEntity
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from . import SyncthingConfigEntry
-from .const import DOMAIN
 from .coordinator import SyncthingCoordinator
+from .entity import SyncthingDeviceEntity, SyncthingFolderEntity, SyncthingSystemEntity
 
 PARALLEL_UPDATES = 1
 
@@ -70,10 +69,9 @@ async def async_setup_entry(
     async_add_entities(entities)
 
 
-class SyncthingScanAllButton(CoordinatorEntity[SyncthingCoordinator], ButtonEntity):
+class SyncthingScanAllButton(SyncthingSystemEntity, ButtonEntity):
     """Button to trigger scan of all folders."""
 
-    _attr_has_entity_name = True
     _attr_translation_key = "scan_all"
     _attr_icon = "mdi:folder-refresh"
 
@@ -82,13 +80,8 @@ class SyncthingScanAllButton(CoordinatorEntity[SyncthingCoordinator], ButtonEnti
         coordinator: SyncthingCoordinator,
         entry_id: str,
     ) -> None:
-        super().__init__(coordinator)
+        super().__init__(coordinator, entry_id)
         self._attr_unique_id = f"{entry_id}_scan_all"
-        self._attr_device_info = {
-            "identifiers": {(DOMAIN, entry_id)},
-            "name": "Syncthing",
-            "manufacturer": "Syncthing Foundation",
-        }
 
     async def async_press(self) -> None:
         """Trigger scan of all folders."""
@@ -98,10 +91,9 @@ class SyncthingScanAllButton(CoordinatorEntity[SyncthingCoordinator], ButtonEnti
         await self.coordinator.async_refresh()
 
 
-class SyncthingFolderScanButton(CoordinatorEntity[SyncthingCoordinator], ButtonEntity):
+class SyncthingFolderScanButton(SyncthingFolderEntity, ButtonEntity):
     """Button to trigger scan of a specific folder."""
 
-    _attr_has_entity_name = True
     _attr_translation_key = "folder_scan"
     _attr_icon = "mdi:folder-sync"
 
@@ -112,15 +104,8 @@ class SyncthingFolderScanButton(CoordinatorEntity[SyncthingCoordinator], ButtonE
         folder_id: str,
         folder_label: str,
     ) -> None:
-        super().__init__(coordinator)
-        self._folder_id = folder_id
+        super().__init__(coordinator, entry_id, folder_id, folder_label)
         self._attr_unique_id = f"{entry_id}_folder_{folder_id}_scan"
-        self._attr_device_info = {
-            "identifiers": {(DOMAIN, f"{entry_id}_folder_{folder_id}")},
-            "name": f"Syncthing Folder: {folder_label}",
-            "manufacturer": "Syncthing Foundation",
-            "via_device": (DOMAIN, entry_id),
-        }
 
     async def async_press(self) -> None:
         """Trigger scan of this folder."""
@@ -130,10 +115,9 @@ class SyncthingFolderScanButton(CoordinatorEntity[SyncthingCoordinator], ButtonE
         await self.coordinator.async_refresh()
 
 
-class SyncthingFolderPauseButton(CoordinatorEntity[SyncthingCoordinator], ButtonEntity):
+class SyncthingFolderPauseButton(SyncthingFolderEntity, ButtonEntity):
     """Button to pause a specific folder."""
 
-    _attr_has_entity_name = True
     _attr_translation_key = "folder_pause"
     _attr_icon = "mdi:folder-lock"
 
@@ -144,15 +128,8 @@ class SyncthingFolderPauseButton(CoordinatorEntity[SyncthingCoordinator], Button
         folder_id: str,
         folder_label: str,
     ) -> None:
-        super().__init__(coordinator)
-        self._folder_id = folder_id
+        super().__init__(coordinator, entry_id, folder_id, folder_label)
         self._attr_unique_id = f"{entry_id}_folder_{folder_id}_pause"
-        self._attr_device_info = {
-            "identifiers": {(DOMAIN, f"{entry_id}_folder_{folder_id}")},
-            "name": f"Syncthing Folder: {folder_label}",
-            "manufacturer": "Syncthing Foundation",
-            "via_device": (DOMAIN, entry_id),
-        }
 
     async def async_press(self) -> None:
         """Pause this folder."""
@@ -162,12 +139,9 @@ class SyncthingFolderPauseButton(CoordinatorEntity[SyncthingCoordinator], Button
         await self.coordinator.async_refresh()
 
 
-class SyncthingFolderResumeButton(
-    CoordinatorEntity[SyncthingCoordinator], ButtonEntity
-):
+class SyncthingFolderResumeButton(SyncthingFolderEntity, ButtonEntity):
     """Button to resume a specific folder."""
 
-    _attr_has_entity_name = True
     _attr_translation_key = "folder_resume"
     _attr_icon = "mdi:folder-play"
 
@@ -178,15 +152,8 @@ class SyncthingFolderResumeButton(
         folder_id: str,
         folder_label: str,
     ) -> None:
-        super().__init__(coordinator)
-        self._folder_id = folder_id
+        super().__init__(coordinator, entry_id, folder_id, folder_label)
         self._attr_unique_id = f"{entry_id}_folder_{folder_id}_resume"
-        self._attr_device_info = {
-            "identifiers": {(DOMAIN, f"{entry_id}_folder_{folder_id}")},
-            "name": f"Syncthing Folder: {folder_label}",
-            "manufacturer": "Syncthing Foundation",
-            "via_device": (DOMAIN, entry_id),
-        }
 
     async def async_press(self) -> None:
         """Resume this folder."""
@@ -196,10 +163,9 @@ class SyncthingFolderResumeButton(
         await self.coordinator.async_refresh()
 
 
-class SyncthingDevicePauseButton(CoordinatorEntity[SyncthingCoordinator], ButtonEntity):
+class SyncthingDevicePauseButton(SyncthingDeviceEntity, ButtonEntity):
     """Button to pause a specific device."""
 
-    _attr_has_entity_name = True
     _attr_translation_key = "device_pause"
     _attr_icon = "mdi:pause-circle"
 
@@ -210,15 +176,8 @@ class SyncthingDevicePauseButton(CoordinatorEntity[SyncthingCoordinator], Button
         device_id: str,
         device_label: str,
     ) -> None:
-        super().__init__(coordinator)
-        self._device_id = device_id
+        super().__init__(coordinator, entry_id, device_id, device_label)
         self._attr_unique_id = f"{entry_id}_device_{device_id}_pause"
-        self._attr_device_info = {
-            "identifiers": {(DOMAIN, f"{entry_id}_device_{device_id}")},
-            "name": f"Syncthing Device: {device_label}",
-            "manufacturer": "Syncthing Foundation",
-            "via_device": (DOMAIN, entry_id),
-        }
 
     async def async_press(self) -> None:
         """Pause this device."""
@@ -228,12 +187,9 @@ class SyncthingDevicePauseButton(CoordinatorEntity[SyncthingCoordinator], Button
         await self.coordinator.async_refresh()
 
 
-class SyncthingDeviceResumeButton(
-    CoordinatorEntity[SyncthingCoordinator], ButtonEntity
-):
+class SyncthingDeviceResumeButton(SyncthingDeviceEntity, ButtonEntity):
     """Button to resume a specific device."""
 
-    _attr_has_entity_name = True
     _attr_translation_key = "device_resume"
     _attr_icon = "mdi:play-circle"
 
@@ -244,15 +200,8 @@ class SyncthingDeviceResumeButton(
         device_id: str,
         device_label: str,
     ) -> None:
-        super().__init__(coordinator)
-        self._device_id = device_id
+        super().__init__(coordinator, entry_id, device_id, device_label)
         self._attr_unique_id = f"{entry_id}_device_{device_id}_resume"
-        self._attr_device_info = {
-            "identifiers": {(DOMAIN, f"{entry_id}_device_{device_id}")},
-            "name": f"Syncthing Device: {device_label}",
-            "manufacturer": "Syncthing Foundation",
-            "via_device": (DOMAIN, entry_id),
-        }
 
     async def async_press(self) -> None:
         """Resume this device."""

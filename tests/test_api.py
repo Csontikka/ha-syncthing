@@ -429,3 +429,51 @@ def test_check_health_ssl_error_propagates():
         assert False, "Expected SyncthingSslError"
     except SyncthingSslError:
         pass
+
+
+def test_pause_folder_returns_true_on_success():
+    async def _run():
+        session = MagicMock()
+        resp = make_mock_response(200, None, text="")
+        resp.content_type = "text/plain"
+        session.request = MagicMock(return_value=resp)
+        api = make_api(session)
+        return await api.pause_folder("abcd-1234")
+
+    assert asyncio.run(_run()) is True
+
+
+def test_pause_folder_returns_false_on_error():
+    async def _run():
+        session = MagicMock()
+        session.request = MagicMock(
+            side_effect=aiohttp.ClientError("Connection failed")
+        )
+        api = make_api(session)
+        return await api.pause_folder("abcd-1234")
+
+    assert asyncio.run(_run()) is False
+
+
+def test_resume_folder_returns_true_on_success():
+    async def _run():
+        session = MagicMock()
+        resp = make_mock_response(200, None, text="")
+        resp.content_type = "text/plain"
+        session.request = MagicMock(return_value=resp)
+        api = make_api(session)
+        return await api.resume_folder("abcd-1234")
+
+    assert asyncio.run(_run()) is True
+
+
+def test_resume_folder_returns_false_on_error():
+    async def _run():
+        session = MagicMock()
+        session.request = MagicMock(
+            side_effect=aiohttp.ClientError("Connection failed")
+        )
+        api = make_api(session)
+        return await api.resume_folder("abcd-1234")
+
+    assert asyncio.run(_run()) is False

@@ -7,6 +7,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 from custom_components.syncthing_extended.api import (
     SyncthingAuthError,
     SyncthingConnectionError,
+    SyncthingSslError,
 )
 from custom_components.syncthing_extended.const import (
     CONF_API_KEY,
@@ -314,3 +315,209 @@ def test_config_flow_empty_unique_id():
 
     result = asyncio.run(_run())
     assert result["errors"]["base"] == "cannot_connect"
+
+
+def test_config_flow_success_with_device_name():
+    """Covers friendly-name title branch (lines 92-99 in config_flow.py)."""
+    async def _run():
+        flow = _make_flow()
+        mock_api = _mock_api()
+        mock_api.get_config_devices = AsyncMock(
+            return_value=[
+                {
+                    "deviceID": MOCK_SYSTEM_STATUS["myID"],
+                    "name": "MyNAS",
+                }
+            ]
+        )
+
+        captured = {}
+
+        def _capture_entry(*, title, data):
+            captured["title"] = title
+            return {"type": "create_entry", "title": title, "data": data}
+
+        with patch(
+            "custom_components.syncthing_extended.config_flow.SyncthingApi",
+            return_value=mock_api,
+        ), patch(
+            "custom_components.syncthing_extended.config_flow.async_get_clientsession",
+            return_value=MagicMock(),
+        ), patch.object(
+            flow, "async_set_unique_id", AsyncMock()
+        ), patch.object(
+            flow, "_abort_if_unique_id_configured", MagicMock()
+        ), patch.object(
+            flow, "async_create_entry", side_effect=_capture_entry
+        ):
+            result = await flow.async_step_user(VALID_INPUT)
+        return result, captured
+
+    result, captured = asyncio.run(_run())
+    assert result["type"] == "create_entry"
+    assert captured["title"] == "Syncthing @ MyNAS"
+
+
+def test_config_flow_ssl_error():
+    """Covers line 110 (SyncthingSslError branch)."""
+    async def _run():
+        flow = _make_flow()
+        mock_api = MagicMock()
+        mock_api.check_health = AsyncMock(side_effect=SyncthingSslError("bad cert"))
+
+        with patch(
+            "custom_components.syncthing_extended.config_flow.SyncthingApi",
+            return_value=mock_api,
+        ), patch(
+            "custom_components.syncthing_extended.config_flow.async_get_clientsession",
+            return_value=MagicMock(),
+        ), patch.object(
+            flow,
+            "async_show_form",
+            return_value={"type": "form", "errors": {"base": "ssl_error"}},
+        ):
+            return await flow.async_step_user(VALID_INPUT)
+
+    result = asyncio.run(_run())
+    assert result["errors"]["base"] == "ssl_error"
+
+
+def test_config_flow_connection_exception():
+    """Covers line 112 (SyncthingConnectionError branch via exception)."""
+    async def _run():
+        flow = _make_flow()
+        mock_api = MagicMock()
+        mock_api.check_health = AsyncMock(
+            side_effect=SyncthingConnectionError("no route")
+        )
+
+        with patch(
+            "custom_components.syncthing_extended.config_flow.SyncthingApi",
+            return_value=mock_api,
+        ), patch(
+            "custom_components.syncthing_extended.config_flow.async_get_clientsession",
+            return_value=MagicMock(),
+        ), patch.object(
+            flow,
+            "async_show_form",
+            return_value={"type": "form", "errors": {"base": "cannot_connect"}},
+        ):
+            return await flow.async_step_user(VALID_INPUT)
+
+    result = asyncio.run(_run())
+    assert result["errors"]["base"] == "cannot_connect"
+
+
+def test_reauth_confirm_ssl_error():
+    """Covers lines 156-157 (reauth SyncthingSslError)."""
+    async def _run():
+        flow = _make_flow()
+        mock_api = MagicMock()
+        mock_api.get_system_status = AsyncMock(side_effect=SyncthingSslError("bad cert"))
+
+        reauth_entry = MagicMock()
+        reauth_entry.data = {
+            CONF_HOST: "192.168.1.100",
+            CONF_PORT: 8384,
+            CONF_API_KEY: "old-key",
+            CONF_VERIFY_SSL: False,
+        }
+
+        with patch(
+            "custom_components.syncthing_extended.config_flow.SyncthingApi",
+            return_value=mock_api,
+        ), patch(
+            "custom_components.syncthing_extended.config_flow.async_get_clientsession",
+            return_value=MagicMock(),
+        ), patch.object(
+            flow, "_get_reauth_entry", return_value=reauth_entry
+        ), patch.object(
+            flow,
+            "async_show_form",
+            return_value={"type": "form", "errors": {"base": "ssl_error"}},
+        ):
+            return await flow.async_step_reauth_confirm({CONF_API_KEY: "new-key"})
+
+    result = asyncio.run(_run())
+    assert result["errors"]["base"] == "ssl_error"
+
+
+def test_reauth_confirm_connection_error():
+    """Covers lines 158-159 (reauth SyncthingConnectionError)."""
+    async def _run():
+        flow = _make_flow()
+        mock_api = MagicMock()
+        mock_api.get_system_status = AsyncMock(
+            side_effect=SyncthingConnectionError("no route")
+        )
+
+        reauth_entry = MagicMock()
+        reauth_entry.data = {
+            CONF_HOST: "192.168.1.100",
+            CONF_PORT: 8384,
+            CONF_API_KEY: "old-key",
+            CONF_VERIFY_SSL: False,
+        }
+
+        with patch(
+            "custom_components.syncthing_extended.config_flow.SyncthingApi",
+            return_value=mock_api,
+        ), patch(
+            "custom_components.syncthing_extended.config_flow.async_get_clientsession",
+            return_value=MagicMock(),
+        ), patch.object(
+            flow, "_get_reauth_entry", return_value=reauth_entry
+        ), patch.object(
+            flow,
+            "async_show_form",
+            return_value={"type": "form", "errors": {"base": "cannot_connect"}},
+        ):
+            return await flow.async_step_reauth_confirm({CONF_API_KEY: "new-key"})
+
+    result = asyncio.run(_run())
+    assert result["errors"]["base"] == "cannot_connect"
+
+
+def test_reauth_confirm_unknown_exception():
+    """Covers lines 160-162 (reauth unknown exception branch)."""
+    async def _run():
+        flow = _make_flow()
+        mock_api = MagicMock()
+        mock_api.get_system_status = AsyncMock(side_effect=Exception("boom"))
+
+        reauth_entry = MagicMock()
+        reauth_entry.data = {
+            CONF_HOST: "192.168.1.100",
+            CONF_PORT: 8384,
+            CONF_API_KEY: "old-key",
+            CONF_VERIFY_SSL: False,
+        }
+
+        with patch(
+            "custom_components.syncthing_extended.config_flow.SyncthingApi",
+            return_value=mock_api,
+        ), patch(
+            "custom_components.syncthing_extended.config_flow.async_get_clientsession",
+            return_value=MagicMock(),
+        ), patch.object(
+            flow, "_get_reauth_entry", return_value=reauth_entry
+        ), patch.object(
+            flow,
+            "async_show_form",
+            return_value={"type": "form", "errors": {"base": "unknown"}},
+        ):
+            return await flow.async_step_reauth_confirm({CONF_API_KEY: "new-key"})
+
+    result = asyncio.run(_run())
+    assert result["errors"]["base"] == "unknown"
+
+
+def test_async_get_options_flow():
+    """Covers line 174 (async_get_options_flow static callback)."""
+    from custom_components.syncthing_extended.config_flow import (
+        SyncthingConfigFlow,
+        SyncthingOptionsFlow,
+    )
+
+    result = SyncthingConfigFlow.async_get_options_flow(MagicMock())
+    assert isinstance(result, SyncthingOptionsFlow)

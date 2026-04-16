@@ -348,3 +348,58 @@ def test_handle_pause_all_failure_raises():
         assert False, "Expected HomeAssistantError"
     except HomeAssistantError:
         pass
+
+
+def test_handle_pause_folder_success():
+    async def _run():
+        hass, coordinator, handlers = _make_hass_with_coordinator()
+        coordinator.api.pause_folder = AsyncMock(return_value=True)
+        call = MagicMock()
+        call.data = {"folder_id": "abcd-1234"}
+        await handlers["pause_folder"](call)
+        coordinator.api.pause_folder.assert_called_once_with("abcd-1234")
+
+    asyncio.run(_run())
+
+
+def test_handle_pause_folder_failure_raises():
+    async def _run():
+        hass, coordinator, handlers = _make_hass_with_coordinator()
+        coordinator.api.pause_folder = AsyncMock(return_value=False)
+        call = MagicMock()
+        call.data = {"folder_id": "abcd-1234"}
+        await handlers["pause_folder"](call)
+
+    from homeassistant.exceptions import HomeAssistantError
+    try:
+        asyncio.run(_run())
+        assert False, "Expected HomeAssistantError"
+    except HomeAssistantError:
+        pass
+
+
+def test_handle_resume_folder_success():
+    async def _run():
+        hass, coordinator, handlers = _make_hass_with_coordinator()
+        coordinator.api.resume_folder = AsyncMock(return_value=True)
+        call = MagicMock()
+        call.data = {"folder_id": "abcd-1234"}
+        await handlers["resume_folder"](call)
+        coordinator.api.resume_folder.assert_called_once_with("abcd-1234")
+
+    asyncio.run(_run())
+
+
+def test_handle_resume_folder_failure_raises():
+    async def _run():
+        hass, coordinator, handlers = _make_hass_with_coordinator()
+        coordinator.api.resume_folder = AsyncMock(return_value=False)
+        call = MagicMock()
+        await handlers["resume_folder"](call)
+
+    from homeassistant.exceptions import HomeAssistantError
+    try:
+        asyncio.run(_run())
+        assert False, "Expected HomeAssistantError"
+    except HomeAssistantError:
+        pass
